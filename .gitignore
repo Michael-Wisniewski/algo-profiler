@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*notes.txt
+.coverage
+*.tox/
+*coverage_report/
+*build/
+*dist/
+*src/algo_profiler.egg-info/
+*algo_profiler.egg-info/
