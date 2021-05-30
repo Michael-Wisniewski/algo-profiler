@@ -41,18 +41,21 @@ jobs:
         python -m unittest discover -v -s tests -t ${PWD}
 
 
-
+    - name: Generate coverage label
     - run: |
-          coverage run -m unittest discover -s tests -t ${PWD}
-          coverage-badge -o ./coverage.svg
+      coverage run -m unittest discover -s tests -t ${PWD}
+      coverage-badge -o ./coverage.svg
+      LABEL_ENV=$(cat coverage.svg)
 
 
+    - name: Tests
+      run: |
+        cat ./coverage.svg
 
 
-
-    
-    - uses: exuanbo/actions-deploy-gist@v1
-    - with:
+    - name: Push new coverage label
+      uses: exuanbo/actions-deploy-gist@v1
+      with:
         token: ${{ secrets.GIST_SECRET }}
         gist_id: 3f54787a495dfd8a05072c1eb12f9da3
         gist_file_name: coverage.svg
