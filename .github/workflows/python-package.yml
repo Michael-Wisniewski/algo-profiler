@@ -42,14 +42,13 @@ jobs:
     - name: Generate coverage label
       run: |
         coverage run -m unittest discover -s tests -t ${PWD}
-        coverage-badge -f -o .github/coverage.svg
-
-    - name: Create Awesome Badge
-      uses: schneegans/dynamic-badges-action@v1.0.0
+        coverage-badge -f -o coverage.svg
+        
+    - uses: actions/checkout@v2
+    - name: Push new coverage label
+      uses: exuanbo/actions-deploy-gist@v1
       with:
-        auth: ${{ secrets.GIST_SECRET }}
-        gistID: <gist-ID>
-        filename: test.json
-        label: Hello
-        message: World
-        color: orange
+        token: ${{ secrets.GIST_SECRET }}
+        gist_id: 3f54787a495dfd8a05072c1eb12f9da3
+        gist_file_name: coverage.svg
+        file_path: ./coverage.svg
