@@ -1,17 +1,16 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: test Python packages
+name: Test python package
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ '**' ]
+#   pull_request:
+#   branches: [ master ]
 
 jobs:
-  linters and unittests:
-
+  lint and unittest:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -39,4 +38,8 @@ jobs:
         flake8 --max-line-length 90 ./src
     - name: Tests
       run: |
-        python -m unittest discover -v -s tests -t ${PWD}         
+        python -m unittest discover -v -s tests -t ${PWD}
+    - name: Generate coverage label
+      run: |
+        coverage run -m unittest discover -s tests -t ${PWD}
+        coverage-badge -f -o .github/coverage.svg
