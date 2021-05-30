@@ -45,12 +45,8 @@ jobs:
       run: |
         coverage run -m unittest discover -s tests -t ${PWD}
         coverage-badge -o ./coverage.svg
-        LABEL_ENV=$(cat coverage.svg)
 
 
-    - name: Tests
-      run: |
-        cat ./coverage.svg
 
 
     - name: Push new coverage label
