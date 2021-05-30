@@ -42,13 +42,10 @@ jobs:
     - name: Generate coverage label
       run: |
         coverage run -m unittest discover -s tests -t ${PWD}
-        coverage-badge -o coverage.svg
+        coverage-badge -o ./coverage.svg
 
     - uses: actions/checkout@v2
     - name: Push new coverage label
-      run: |
-          coverage run -m unittest discover -s tests -t ${PWD}
-          coverage-badge -o coverage.svg
       uses: exuanbo/actions-deploy-gist@v1
       with:
         token: ${{ secrets.GIST_SECRET }}
