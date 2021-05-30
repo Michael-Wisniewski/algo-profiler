@@ -10,7 +10,7 @@ on:
 #   branches: [ master ]
 
 jobs:
-  lint and unittest:
+  lint_and_unittest:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
