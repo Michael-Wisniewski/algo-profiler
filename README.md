@@ -1,3 +1,5 @@
+![coverage](./.github/workflows/coverage.svg)
+
 ## algo-profiler
 
 Package of profiling tools which allows to run:
