@@ -1,5 +1,5 @@
 ![lint](./.github/lint.svg)
-![coverage](https://gist.githubusercontent.com/Michael-Wisniewski/3f54787a495dfd8a05072c1eb12f9da3/raw/coverage.svg)
+![coverage](https://raw.githubusercontent.com/gist/Michael-Wisniewski/3f54787a495dfd8a05072c1eb12f9da3/raw/coverage.svg)
 
 ## algo-profiler
 
