@@ -1,7 +1,6 @@
 import inspect
-from functools import partial
 
-from memory_profiler import LineProfiler, choose_backend, show_results
+from memory_profiler import LineProfiler, show_results
 
 
 class MemoryCheck:

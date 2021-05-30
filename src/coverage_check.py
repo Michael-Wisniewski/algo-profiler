@@ -1,7 +1,6 @@
 import importlib
 import inspect
 import os
-from unittest.mock import mock_open, patch
 
 from coverage import Coverage
 

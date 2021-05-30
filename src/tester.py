@@ -1,4 +1,3 @@
-import sys
 import traceback as tb
 from unittest import TestCase
 

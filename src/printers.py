@@ -1,9 +1,8 @@
-import os
-import sys
-from contextlib import contextmanager
 from inspect import signature
 from reprlib import Repr
+
 from objsize import get_deep_size as get_size
+
 
 # use x1b and enum
 class PrinterMixin:
@@ -26,9 +25,10 @@ class PrinterMixin:
             if show_size:
                 size = round(get_size(arg_val) / 1048576, 4)
                 print(f" {size} MB", end="")
-            
+
             print(f": {repr_instance.repr(arg_val)}")
         print()
+
 
 class TablePrinterMixin:
     def format_columns(self, columns, column_width):

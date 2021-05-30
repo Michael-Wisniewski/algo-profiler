@@ -3,6 +3,7 @@ import inspect
 
 # import numpy as np
 from line_profiler import LineProfiler
+
 from .coverage_check import CoverageCheck
 from .memory_check import MemoryCheck
 from .printers import PrinterMixin

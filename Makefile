@@ -29,7 +29,8 @@ lint:
 	@isort ./src
 	$(call print_h1,"LAUNCHING","BLACK")
 	@black ./src
-
+	$(call print_h1,"LAUNCHING","FLAKE8")
+	@flake8 --max-line-length 90 ./src/
 
 # dodac tox
 # dodac  python setup.py bdist_wheel

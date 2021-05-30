@@ -11,7 +11,7 @@ class DataErrorLabels(LabelBase):
                     "input": ... ,
                     "output": ... ,
                 },
-            ]            
+            ]
         """
 
 
