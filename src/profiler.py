@@ -152,3 +152,4 @@ class Profiler(PrinterMixin):
     # plt.show()
 
     # coeff, residuals, rank, s = np.linalg.lstsq(data_gen_args, mem_usages, rcond=-1)
+
