@@ -43,4 +43,4 @@ jobs:
     - name: Generate coverage label
       run: |
         coverage run -m unittest discover -s tests -t ${PWD}
-        coverage-badge -f -o .github/workflows/coverage.svg
+        coverage-badge -f -o .github/coverage.svg

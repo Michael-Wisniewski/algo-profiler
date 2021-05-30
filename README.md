@@ -1,4 +1,5 @@
-![coverage](./.github/workflows/coverage.svg)
+![lint](./.github/lint.svg)
+![coverage](./.github/coverage.svg)
 
 ## algo-profiler
 
