@@ -43,3 +43,13 @@ jobs:
       run: |
         coverage run -m unittest discover -s tests -t ${PWD}
         coverage-badge -f -o .github/coverage.svg
+
+    - name: Create Awesome Badge
+      uses: schneegans/dynamic-badges-action@v1.0.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: <gist-ID>
+        filename: test.json
+        label: Hello
+        message: World
+        color: orange
