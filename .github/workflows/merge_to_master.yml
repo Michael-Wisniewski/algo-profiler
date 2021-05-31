@@ -35,7 +35,7 @@ jobs:
           gist_file_name: coverage.svg
           file_path: ./coverage.svg
       - name: Check lines of code number
-        run: echo"$(git ls-files | xargs cat | wc -l)" >> $LINES_OF_CODE
+        run: echo "LINES_OF_CODE=$(git ls-files | xargs cat | wc -l)" >> $GITHUB_ENV
       - name: Push new lines of code label
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
