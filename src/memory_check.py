@@ -41,34 +41,18 @@ class MemoryCheck:
 
     def run_memory_check(self, func, kwargs):
         self.helper_funcs = {}
-
         func_module = inspect.getmodule(func)
         funcs = inspect.getmembers(func_module, inspect.isfunction)
-        func_names = list(dict(funcs).keys())
-        func_names.remove(func.__name__)
-
-        for func_name in func_names:
-            func_instance = getattr(func_module, func_name)
-            setattr(func_module, func_name, self.get_args_decorator(func_instance))
-            self.helper_funcs[func_name] = {
-                "instance": func_instance,
-                "call_params": [],
-            }
-
+        
         profiler = LineProfiler()
-        profiler(func)(**kwargs)
-        self.clean_result(profiler)
-        show_results(profiler)
+        wrapper = profiler(func)
 
-        for helper_func in self.helper_funcs.values():
-            if not helper_func["call_params"]:
+        for func_name, func_instance in funcs:
+            if func_name == func.__name__:
                 continue
 
-            profiler = LineProfiler()
-            wrapper = profiler(helper_func["instance"])
-
-            for params in helper_func["call_params"]:
-                wrapper(*params["args"], **params["kwargs"])
-
-            self.clean_result(profiler)
-            show_results(profiler)
+            profiler.code_map.add(func_instance.__code__)
+        
+        wrapper(**kwargs)
+        self.clean_result(profiler)
+        show_results(profiler)
