@@ -1,3 +1,4 @@
+
 def search(wanted_name, names):
     if len(names) == 0:
         return False
@@ -7,11 +8,10 @@ def search(wanted_name, names):
     for index, name in enumerate(names):
         if name == wanted_name:
             name_index = index
-            second_func()
+        second_func(index)
+        second_func2(index)
 
-    [1] * 10 ** 7 # creating list for slowing down code
+    a = [1] * (10 ** 6) # creating list for slowing down code
     
     return name_index
 
-def second_func():
-    len([1] * (10 ** 7))
