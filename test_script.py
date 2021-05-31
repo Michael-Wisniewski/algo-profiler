@@ -93,44 +93,49 @@ def naive_search(wanted_name, names):
 
 profiler = Profiler()
 
-profiler.run_tests(func=search, test_set=test_set)
+# profiler.run_tests(func=search, test_set=test_set)
 
-profiler.run_stress_tests(
-    func=search,
-    naive_func=naive_search,
-    data_gen=data_gen_with_name,
-    gen_min_arg=1,
-    gen_max_arg=1000,
-    gen_steps=10,
-)
+# profiler.run_stress_tests(
+#     func=search,
+#     naive_func=naive_search,
+#     data_gen=data_gen_with_name,
+#     gen_min_arg=1,
+#     gen_max_arg=1000,
+#     gen_steps=10,
+# )
 
-profiler.run_coverage(func=search, test_set=test_set)
+# profiler.run_coverage(func=search, test_set=test_set)
 
-profiler.run_time_check(
-    func=search,
-    kwargs=data_gen_with_name(100)
-)
+# profiler.run_time_check(
+#     func=search,
+#     kwargs=data_gen_with_name(100)
+# )
 
-profiler.run_timer(
-    func=search,
-    data_gen=data_gen_with_name,
-    gen_min_arg=1000,
-    gen_max_arg=10000,
-    gen_steps=10,
-    iterations=1,
-)
+# profiler.run_timer(
+#     func=search,
+#     data_gen=data_gen_with_name,
+#     gen_min_arg=1000,
+#     gen_max_arg=10000,
+#     gen_steps=10,
+#     iterations=1,
+# )
 
-profiler.run_c_profiler(
-    func=search,
-    kwargs=data_gen_with_name(10)
-)
+# profiler.run_c_profiler(
+#     func=search,
+#     kwargs=data_gen_with_name(10)
+# )
 
-profiler.run_line_profiler(
-    func=search,
-    kwargs=data_gen_with_name(10)
-)
+# profiler.run_line_profiler(
+#     func=search,
+#     kwargs=data_gen_with_name(10)
+# )
 
-profiler.run_memory_check(
+# profiler.run_memory_check(
+#     func=search,
+#     kwargs=data_gen_with_name(10)
+# )
+
+profiler.run_memory_profiler(
     func=search,
     kwargs=data_gen_with_name(10)
 )
