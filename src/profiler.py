@@ -81,6 +81,7 @@ class Profiler(PrinterMixin):
         line_profiler = LineProfiler()
         functions = inspect.getmembers(inspect.getmodule(func), inspect.isfunction)
         function_instances = dict(functions).values()
+        print('aaa')
 
         for function_instance in function_instances:
             if function_instance is not func:

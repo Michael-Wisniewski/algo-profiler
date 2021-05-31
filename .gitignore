@@ -2,6 +2,8 @@ __pycache__/
 *.pyc
 *notes.txt
 .coverage
+coverage.xml
+.scannerwork
 *.tox/
 *coverage_report/
 *build/
