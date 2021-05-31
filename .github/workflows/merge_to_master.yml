@@ -34,3 +34,15 @@ jobs:
           gist_id: 3f54787a495dfd8a05072c1eb12f9da3
           gist_file_name: coverage.svg
           file_path: ./coverage.svg
+      - name: Check lines of code number
+        run: LINES_OF_CODE=$(git ls-files | xargs cat | wc -l)
+      - name: Push new lines of code label
+        uses: schneegans/dynamic-badges-action@v1.0.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 3f54787a495dfd8a05072c1eb12f9da3
+          filename: lines_of_code.json
+          label: Lines
+          message: ${{ env.LINES_OF_CODE }}
+          color: green
+          namedLogo: jest
