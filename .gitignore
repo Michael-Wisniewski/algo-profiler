@@ -4,6 +4,7 @@ __pycache__/
 .coverage
 coverage.xml
 .scannerwork
+docker-compose.yml
 *.tox/
 *coverage_report/
 *build/
