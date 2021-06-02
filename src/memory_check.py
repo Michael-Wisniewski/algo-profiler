@@ -43,7 +43,7 @@ class MemoryCheck:
         self.helper_funcs = {}
         func_module = inspect.getmodule(func)
         funcs = inspect.getmembers(func_module, inspect.isfunction)
-        
+
         profiler = LineProfiler()
         wrapper = profiler(func)
 
@@ -52,7 +52,7 @@ class MemoryCheck:
                 continue
 
             profiler.code_map.add(func_instance.__code__)
-        
+
         wrapper(**kwargs)
         self.clean_result(profiler)
         show_results(profiler)

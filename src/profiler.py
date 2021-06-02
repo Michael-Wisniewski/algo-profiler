@@ -27,9 +27,18 @@ class Profiler(PrinterMixin):
         self.tester.run_unit_tests(func=func, test_set=test_set)
 
     def run_stress_tests(
-        self, func, naive_func, data_gen, gen_min_arg, gen_max_arg, gen_steps
+        self,
+        func,
+        naive_func,
+        data_gen,
+        gen_min_arg,
+        gen_max_arg,
+        gen_steps,
+        label=None,
     ):
         self.print_title("STRESS TESTS")
+        if label:
+            self.print_title(label)
         self.print_function(func)
         self.print_function(naive_func)
         self.tester.run_stress_tests(
@@ -55,7 +64,14 @@ class Profiler(PrinterMixin):
         print(f"Function run time: {round(run_time, 6)} sec")
 
     def run_timer(
-        self, func, data_gen, gen_min_arg, gen_max_arg, gen_steps, iterations
+        self,
+        func,
+        data_gen,
+        gen_min_arg,
+        gen_max_arg,
+        gen_steps,
+        iterations,
+        draw_chart=False,
     ):
         self.print_title("TIMER")
         self.print_function(func)
@@ -66,6 +82,7 @@ class Profiler(PrinterMixin):
             gen_max_arg=gen_max_arg,
             gen_steps=gen_steps,
             iterations=iterations,
+            draw_chart=draw_chart,
         )
 
     def run_c_profiler(self, func, kwargs):
@@ -81,7 +98,7 @@ class Profiler(PrinterMixin):
         line_profiler = LineProfiler()
         functions = inspect.getmembers(inspect.getmodule(func), inspect.isfunction)
         function_instances = dict(functions).values()
-        print('aaa')
+        print("aaa")
 
         for function_instance in function_instances:
             if function_instance is not func:
@@ -153,4 +170,3 @@ class Profiler(PrinterMixin):
     # plt.show()
 
     # coeff, residuals, rank, s = np.linalg.lstsq(data_gen_args, mem_usages, rcond=-1)
-
