@@ -31,7 +31,7 @@ class TimerResultFormatter(TablePrinterMixin):
         self.print_row(columns=column_names, column_width=self.column_width)
 
     def append(self, run_idnex, run_arg, run_time):
-        self.results.append({"arg": run_arg, "val": run_time})
+        self.results.append({"arg": run_arg, "time": run_time})
         counter = f"{run_idnex}/{self.runs_num}"
         columns_value = [counter, run_arg, run_time]
         self.print_row(columns=columns_value, column_width=self.column_width)
@@ -45,7 +45,7 @@ class TimerResultFormatter(TablePrinterMixin):
         plt.ylabel("Measured time")
 
         x = [result["arg"] for result in self.results]
-        y = [result["val"] for result in self.results]
+        y = [result["time"] for result in self.results]
 
         plt.plot(x, y)
         plt.show()
@@ -57,7 +57,7 @@ class Timer:
         avg_execution_time = total_execution_time / iterations
         return avg_execution_time
 
-    def run_timer(
+    def run_time_analysis(
         self,
         func,
         data_gen,

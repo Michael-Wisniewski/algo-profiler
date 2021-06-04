@@ -1,28 +1,83 @@
 import inspect
+from textwrap import dedent
+
+import matplotlib.pyplot as plt
+from objsize import get_deep_size as get_size
 
 from memory_profiler import LineProfiler, show_results
+
+from .helpers import LabelBase
+from .linear_space import linear_space
+from .printers import TablePrinterMixin
+
+
+class TimerLabels(LabelBase):
+    RUN_NUMBER = "Run number"
+    RUN_ARGUMENT = "Function argument"
+    RUN_ITERATIONS = "Function iterations"
+    RUN_TIME = "Avg time (sec)"
+
+
+class MemoryCheckResultFormatter(TablePrinterMixin):
+    column_width = 23
+
+    def __init__(self, runs_num):
+        self.runs_num = runs_num
+        self.results = []
+        self.print_headers()
+
+    def print_headers(self):
+        column_names = [
+            TimerLabels.RUN_NUMBER,
+            TimerLabels.RUN_ARGUMENT,
+            "Kwargs",
+            "Function",
+            "Total",
+        ]
+        self.print_row(columns=column_names, column_width=self.column_width)
+
+    def append(self, run_idnex, run_arg, kwargs_size, func_usage, total_usage):
+
+        self.results.append(
+            {
+                "run_arg": run_arg,
+                "kwargs_size": kwargs_size,
+                "func_usage": func_usage,
+                "total_usage": total_usage,
+            }
+        )
+
+        counter = f"{run_idnex}/{self.runs_num}"
+        columns_value = [counter, run_arg, kwargs_size, func_usage, total_usage]
+        self.print_row(columns=columns_value, column_width=self.column_width)
+
+        if run_idnex == self.runs_num:
+            print("")
+
+    def draw_chart(self):
+        plt.title("Memory usage")
+        plt.xlabel("Data generator's argument")
+        plt.ylabel("Memory usage")
+
+        x = [result["run_arg"] for result in self.results]
+        y = [result["kwargs_size"] for result in self.results]
+        plt.plot(x, y, label="kwargs size")
+
+        x = [result["run_arg"] for result in self.results]
+        y = [result["func_usage"] for result in self.results]
+        plt.plot(x, y, label="function mem usage")
+
+        x = [result["run_arg"] for result in self.results]
+        y = [result["total_usage"] for result in self.results]
+        plt.plot(x, y, label="total mem usage")
+
+        plt.legend()
+        plt.show()
 
 
 class MemoryCheck:
     def __init__(self):
         self.helper_funcs = {}
-
-    def get_mem_usage(self, func, kwargs):
-        profiler = LineProfiler()
-        profiler(func)(**kwargs)
-        usage_by_lines = list(profiler.code_map.values())[0]
-        usage_on_start = list(usage_by_lines.values())[0][1]
-        usage_on_end = list(usage_by_lines.values())[-1][1]
-        return usage_on_end - usage_on_start
-
-    def get_args_decorator(self, func):
-        def wrapper(*args, **kwargs):
-            self.helper_funcs[func.__name__]["call_params"].append(
-                {"args": args, "kwargs": kwargs}
-            )
-            return func(*args, **kwargs)
-
-        return wrapper
 
     def clean_result(self, profiler):
         code_map = profiler.code_map
@@ -39,7 +94,48 @@ class MemoryCheck:
                 usage -= initial_usage
                 code_map[code_obj_key][line_key] = (increment, usage, occurences)
 
+    def get_kwargs_size(self, kwargs):
+        return round(get_size(kwargs) / 1048576, 4)
+
+    def extract_result_from_profiler(self, profiler):
+        usage_by_lines = list(profiler.code_map.values())[0]
+        usage_on_start = list(usage_by_lines.values())[0][1]
+        usage_on_start = round(usage_on_start, 4)
+        usage_on_end = list(usage_by_lines.values())[-1][1]
+        usage_on_end = round(usage_on_end, 4)
+
+        return usage_on_end - usage_on_start, usage_on_end
+
+    def get_mem_usage(self, func, kwargs):
+        kwargs_size = self.get_kwargs_size(kwargs)
+
+        profiler = LineProfiler()
+        profiler(func)(**kwargs)
+        func_usage, total_usage = self.extract_result_from_profiler(profiler)
+
+        return kwargs_size, func_usage, total_usage
+
+    def print_summary(self, kwargs_size, func_usage, total_usage):
+        summary = dedent(
+            f"""\
+        Kwargs size: {kwargs_size} MiB
+        Function usage: {func_usage} MiB
+
+        Total usage: {total_usage} MiB
+        """
+        )
+
+        print(summary)
+
     def run_memory_check(self, func, kwargs):
+        kwargs_size, func_usage, total_usage = self.get_mem_usage(
+            func=func, kwargs=kwargs
+        )
+        self.print_summary(
+            kwargs_size=kwargs_size, func_usage=func_usage, total_usage=total_usage
+        )
+
+    def run_memory_profiler(self, func, kwargs):
         self.helper_funcs = {}
         func_module = inspect.getmodule(func)
         funcs = inspect.getmembers(func_module, inspect.isfunction)
@@ -54,5 +150,42 @@ class MemoryCheck:
             profiler.code_map.add(func_instance.__code__)
 
         wrapper(**kwargs)
-        self.clean_result(profiler)
+
+        # self.clean_result(profiler)
         show_results(profiler)
+
+        kwargs_size = self.get_kwargs_size(kwargs)
+        func_usage, total_usage = self.extract_result_from_profiler(profiler)
+        self.print_summary(
+            kwargs_size=kwargs_size, func_usage=func_usage, total_usage=total_usage
+        )
+
+    def run_memory_analysis(
+        self,
+        func,
+        data_gen,
+        gen_min_arg,
+        gen_max_arg,
+        gen_steps,
+        draw_chart=False,
+    ):
+        args = linear_space(
+            min_val=gen_min_arg, max_val=gen_max_arg, steps_num=gen_steps
+        )
+        result_formatter = MemoryCheckResultFormatter(runs_num=len(args))
+
+        for index, arg in enumerate(args):
+            kwargs = data_gen(arg)
+            kwargs_size, func_usage, total_usage = self.get_mem_usage(
+                func=func, kwargs=kwargs
+            )
+            result_formatter.append(
+                run_idnex=index + 1,
+                run_arg=arg,
+                kwargs_size=kwargs_size,
+                func_usage=func_usage,
+                total_usage=total_usage,
+            )
+
+        if draw_chart:
+            result_formatter.draw_chart()

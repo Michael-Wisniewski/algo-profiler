@@ -63,7 +63,7 @@ class Profiler(PrinterMixin):
         run_time = self.timer.get_run_time(func=func, kwargs=kwargs)
         print(f"Function run time: {round(run_time, 6)} sec")
 
-    def run_timer(
+    def run_time_analysis(
         self,
         func,
         data_gen,
@@ -75,7 +75,7 @@ class Profiler(PrinterMixin):
     ):
         self.print_title("TIMER")
         self.print_function(func)
-        self.timer.run_timer(
+        self.timer.run_time_analysis(
             func=func,
             data_gen=data_gen,
             gen_min_arg=gen_min_arg,
@@ -98,7 +98,6 @@ class Profiler(PrinterMixin):
         line_profiler = LineProfiler()
         functions = inspect.getmembers(inspect.getmodule(func), inspect.isfunction)
         function_instances = dict(functions).values()
-        print("aaa")
 
         for function_instance in function_instances:
             if function_instance is not func:
@@ -112,14 +111,33 @@ class Profiler(PrinterMixin):
         self.print_title("MEMORY CHECK")
         self.print_function(func)
         self.print_kwargs(kwargs, show_size=True)
-        mem_usage = self.memory_check.get_mem_usage(func, kwargs)
-        print(f"Memory usage: {round(mem_usage, 2)} MiB")
+        self.memory_check.run_memory_check(func=func, kwargs=kwargs)
 
     def run_memory_profiler(self, func, kwargs):
         self.print_title("MEMORY PROFILER")
         self.print_function(func)
         self.print_kwargs(kwargs, show_size=True)
-        self.memory_check.run_memory_check(func=func, kwargs=kwargs)
+        self.memory_check.run_memory_profiler(func=func, kwargs=kwargs)
+
+    def run_memory_analysis(
+        self,
+        func,
+        data_gen,
+        gen_min_arg,
+        gen_max_arg,
+        gen_steps,
+        draw_chart=False,
+    ):
+        self.print_title("MEMORY CHECKS")
+        self.print_function(func)
+        self.memory_check.run_memory_analysis(
+            func=func,
+            data_gen=data_gen,
+            gen_min_arg=gen_min_arg,
+            gen_max_arg=gen_max_arg,
+            gen_steps=gen_steps,
+            draw_chart=draw_chart,
+        )
 
     # def run_time_big_o(
     #     cls, func, data_gen, gen_min_arg, gen_max_arg, gen_steps, iterations=1
