@@ -4,11 +4,14 @@ from textwrap import dedent
 import matplotlib.pyplot as plt
 from objsize import get_deep_size as get_size
 
-from memory_profiler import LineProfiler, show_results
+from memory_profiler import LineProfiler, show_results, memory_usage
 
 from .helpers import LabelBase
 from .linear_space import linear_space
 from .printers import TablePrinterMixin
+
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 class TimerLabels(LabelBase):
@@ -135,7 +138,7 @@ class MemoryCheck:
             kwargs_size=kwargs_size, func_usage=func_usage, total_usage=total_usage
         )
 
-    def run_memory_profiler(self, func, kwargs):
+    def run_memory_profiler(self, func, kwargs, clean_result=False):
         self.helper_funcs = {}
         func_module = inspect.getmodule(func)
         funcs = inspect.getmembers(func_module, inspect.isfunction)
@@ -151,14 +154,37 @@ class MemoryCheck:
 
         wrapper(**kwargs)
 
-        # self.clean_result(profiler)
-        show_results(profiler)
+        if clean_result:
+            self.clean_result(profiler)
+
+        show_results(profiler, precision=4)
 
         kwargs_size = self.get_kwargs_size(kwargs)
         func_usage, total_usage = self.extract_result_from_profiler(profiler)
         self.print_summary(
             kwargs_size=kwargs_size, func_usage=func_usage, total_usage=total_usage
         )
+
+    def run_time_based_memory_usge(self, func, kwargs, interval=0.1):
+        import time
+        plt.title("TIME BASED MEMORY USAGE")
+        plt.xlabel("Time [s]")
+        plt.ylabel("Memory usage [MB]")
+        
+        start_time = time.time()
+        mem_usage = memory_usage((func, (), kwargs), interval=interval)
+        end_time = time.time()
+
+        total_time = end_time - start_time
+        real_interval = total_time / len(mem_usage)
+        time = np.linspace(0, len(mem_usage) * real_interval, len(mem_usage))
+
+        interval_description = f"Interval: given - {interval} sec, measured - {round(real_interval, 4)} sec"
+        plt.text(0, max(mem_usage), interval_description)
+
+        plt.plot(time, mem_usage)
+        plt.legend()
+        plt.show()
 
     def run_memory_analysis(
         self,

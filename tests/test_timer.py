@@ -69,8 +69,8 @@ class TestTimer(TestCase):
         self.assertTrue(result_3 > result_2)
 
     @mock.patch.object(TimerResultFormatter, "append")
-    def test_run_timer(self, mock_append):
-        self.timer.run_timer(func=self.sleep, data_gen=self.test_data_gen, gen_min_arg=1, gen_max_arg=2, gen_steps=2)
+    def test_run_time_analysis(self, mock_append):
+        self.timer.run_time_analysis(func=self.sleep, data_gen=self.test_data_gen, gen_min_arg=1, gen_max_arg=2, gen_steps=2)
         self.assertTrue(len(mock_append.call_args_list) == 2)
 
         run_idnex_1, run_arg_1, run_time_1 = mock_append.call_args_list[0][1].values()

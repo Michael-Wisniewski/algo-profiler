@@ -1,7 +1,6 @@
 import cProfile
 import inspect
 
-# import numpy as np
 from line_profiler import LineProfiler
 
 from .coverage_check import CoverageCheck
@@ -9,9 +8,7 @@ from .memory_check import MemoryCheck
 from .printers import PrinterMixin
 from .tester import Tester
 from .timer import Timer
-
-# from big_o import big_o, infer_big_o_class
-# from big_o.complexities import ALL_CLASSES
+from pympler import tracker
 
 
 class Profiler(PrinterMixin):
@@ -113,11 +110,17 @@ class Profiler(PrinterMixin):
         self.print_kwargs(kwargs, show_size=True)
         self.memory_check.run_memory_check(func=func, kwargs=kwargs)
 
-    def run_memory_profiler(self, func, kwargs):
+    def run_memory_profiler(self, func, kwargs, clean_result=False):
         self.print_title("MEMORY PROFILER")
         self.print_function(func)
         self.print_kwargs(kwargs, show_size=True)
-        self.memory_check.run_memory_profiler(func=func, kwargs=kwargs)
+        self.memory_check.run_memory_profiler(func=func, kwargs=kwargs, clean_result=clean_result)
+
+    def run_time_based_memory_usge(self, func, kwargs, interval=0.1):
+        self.print_title("TIME BASED MEMORY USAGE")
+        self.print_function(func)
+        self.print_kwargs(kwargs, show_size=True)
+        self.memory_check.run_time_based_memory_usge(func=func, kwargs=kwargs, interval=interval)
 
     def run_memory_analysis(
         self,
@@ -138,6 +141,22 @@ class Profiler(PrinterMixin):
             gen_steps=gen_steps,
             draw_chart=draw_chart,
         )
+
+    def check_memory_leaks(self, func, kwargs, num_of_checks=3):
+        self.print_title("MEMORY LEAK CHECK")
+        self.print_function(func)
+        self.print_kwargs(kwargs, show_size=True)
+        tr = tracker.SummaryTracker()
+        func(**kwargs)
+
+        for i in range(1, num_of_checks + 1):
+            self.print_title(f"MEMORY CONTROL AT THE END OF THE FUNCTION #{i}")
+            tr.print_diff()
+        
+        print()
+
+    # dodac scalane i porownac dla func i naive_func
+    # dodac hype
 
     # def run_time_big_o(
     #     cls, func, data_gen, gen_min_arg, gen_max_arg, gen_steps, iterations=1
@@ -188,3 +207,43 @@ class Profiler(PrinterMixin):
     # plt.show()
 
     # coeff, residuals, rank, s = np.linalg.lstsq(data_gen_args, mem_usages, rcond=-1)
+
+
+    def run_big_o_time_check(
+        self,
+        func,
+        data_gen,
+        gen_min_arg,
+        gen_max_arg,
+        gen_steps,
+        iterations=1,
+        verbose=False
+    ):
+        self.print_title("TIME BIG O COMPLEXITY")
+        self.print_function(func)
+
+
+        # from big_o import big_o, infer_big_o_class
+        # from big_o.complexities import ALL_CLASSES  
+       
+        def func_wrapper(kwargss):
+            return func(**kwargss)
+
+
+        from big_o import big_o
+
+        best, others = big_o(
+            func=func_wrapper,
+            data_generator=data_gen,
+            min_n=gen_min_arg,
+            max_n=gen_max_arg,
+            n_measures=gen_steps,
+            n_repeats=4,
+            n_timings=iterations,
+            # classes=ALL_CLASSES,
+            verbose=False,
+            return_raw_data=False,
+        )
+
+        print(best)
+        print(others)
