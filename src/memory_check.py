@@ -12,6 +12,7 @@ from .printers import TablePrinterMixin
 
 import numpy as np
 import matplotlib.pyplot as plt
+from .big_o_analyzer import extend_analyse
 
 
 class TimerLabels(LabelBase):
@@ -57,23 +58,26 @@ class MemoryCheckResultFormatter(TablePrinterMixin):
         if run_idnex == self.runs_num:
             print("")
 
-    def draw_chart(self):
+    def render_base_chart(self):
         plt.title("Memory usage")
         plt.xlabel("Data generator's argument")
-        plt.ylabel("Memory usage")
+        plt.ylabel("Memory [MB]")
 
-        x = [result["run_arg"] for result in self.results]
-        y = [result["kwargs_size"] for result in self.results]
-        plt.plot(x, y, label="kwargs size")
+        args = [result["run_arg"] for result in self.results]
+        kwarg_sizes = [result["kwargs_size"] for result in self.results]
+        func_mem_usage = [result["func_usage"] for result in self.results]
+        total_mem_usage = [result["total_usage"] for result in self.results]
 
-        x = [result["run_arg"] for result in self.results]
-        y = [result["func_usage"] for result in self.results]
-        plt.plot(x, y, label="function mem usage")
+        plt.plot(args, kwarg_sizes, label="kwargs size")  
+        plt.plot(args, func_mem_usage, label="function mem usage")        
+        plt.plot(args, total_mem_usage, label="total mem usage")
 
-        x = [result["run_arg"] for result in self.results]
-        y = [result["total_usage"] for result in self.results]
-        plt.plot(x, y, label="total mem usage")
+    def render_extended_chart(self):
+        args = [result["run_arg"] for result in self.results]
+        total_mem_usage = [result["total_usage"] for result in self.results]
+        extend_analyse(args=args, vals=total_mem_usage, plt=plt)
 
+    def display_chart(self):
         plt.legend()
         plt.show()
 
@@ -214,5 +218,10 @@ class MemoryCheck:
                 total_usage=total_usage,
             )
 
-        if draw_chart:
-            result_formatter.draw_chart()
+        if find_big_o:
+            result_formatter.render_base_chart()
+            result_formatter.render_extended_chart()
+            result_formatter.display_chart()
+        elif draw_chart:
+            result_formatter.render_base_chart()
+            result_formatter.display_chart()
