@@ -69,6 +69,7 @@ class Profiler(PrinterMixin):
         gen_steps,
         iterations,
         draw_chart=False,
+        find_big_o=False
     ):
         self.print_title("TIMER")
         self.print_function(func)
@@ -80,6 +81,7 @@ class Profiler(PrinterMixin):
             gen_steps=gen_steps,
             iterations=iterations,
             draw_chart=draw_chart,
+            find_big_o=find_big_o
         )
 
     def run_c_profiler(self, func, kwargs):
@@ -130,6 +132,7 @@ class Profiler(PrinterMixin):
         gen_max_arg,
         gen_steps,
         draw_chart=False,
+        find_big_o=False
     ):
         self.print_title("MEMORY CHECKS")
         self.print_function(func)
@@ -140,6 +143,7 @@ class Profiler(PrinterMixin):
             gen_max_arg=gen_max_arg,
             gen_steps=gen_steps,
             draw_chart=draw_chart,
+            find_big_o=find_big_o
         )
 
     def check_memory_leaks(self, func, kwargs, num_of_checks=3):
@@ -156,94 +160,3 @@ class Profiler(PrinterMixin):
         print()
 
     # dodac scalane i porownac dla func i naive_func
-    # dodac hype
-
-    # def run_time_big_o(
-    #     cls, func, data_gen, gen_min_arg, gen_max_arg, gen_steps, iterations=1
-    # ):
-    # best_asymptotic_fit, _ = big_o(
-    #     func=func,
-    #     data_generator=data_gen,
-    #     min_n=gen_min_arg,
-    #     max_n=gen_max_arg,
-    #     n_measures=gen_steps,
-    #     n_repeats=iterations,
-    # )
-    # self.print_title("TIME BIG O")
-    # self.print_function(func)
-    # print(best_asymptotic_fit)
-
-    # def run_memory_big_o(
-    #     cls, func, data_gen, gen_min_arg, gen_max_arg, gen_steps, iterations=1
-    # ):
-    # self.print_title("MEMORY BIG O")
-    # self.print_function(func)
-
-    # data_gen_args = np.linspace(gen_min_arg, gen_max_arg, gen_steps).astype("int64")
-    # mem_usages = np.empty(gen_steps)
-
-    # for index, data_gen_arg in enumerate(data_gen_args):
-    #     mem_usage = 0
-    #     func_arg = data_gen(data_gen_arg)
-
-    #     # for _ in range(iterations):
-    #     mem_usage = cls._get_mem_usage(func, func_arg)
-
-    #     mem_usages[index] = mem_usage
-
-    # data_gen_args = data_gen_args / 1000
-
-    # best, _ = infer_big_o_class(
-    #     data_gen_args, mem_usages, ALL_CLASSES, verbose=False
-    # )
-    # print(best)
-
-    # # print(data_gen_args)
-    # # print(mem_usages)
-
-    # from matplotlib import pyplot as plt
-
-    # plt.plot(data_gen_args, mem_usages)
-    # plt.show()
-
-    # coeff, residuals, rank, s = np.linalg.lstsq(data_gen_args, mem_usages, rcond=-1)
-
-
-    def run_big_o_time_check(
-        self,
-        func,
-        data_gen,
-        gen_min_arg,
-        gen_max_arg,
-        gen_steps,
-        iterations=1,
-        verbose=False
-    ):
-        self.print_title("TIME BIG O COMPLEXITY")
-        self.print_function(func)
-
-
-        # from big_o import big_o, infer_big_o_class
-        # from big_o.complexities import ALL_CLASSES  
-       
-        def func_wrapper(kwargss):
-            return func(**kwargss)
-
-
-        from big_o import big_o
-
-        best, others = big_o(
-            func=func_wrapper,
-            data_generator=data_gen,
-            min_n=gen_min_arg,
-            max_n=gen_max_arg,
-            n_measures=gen_steps,
-            n_repeats=4,
-            n_timings=iterations,
-            # classes=ALL_CLASSES,
-            verbose=False,
-            return_raw_data=False,
-        )
-
-        print(best)
-        print(others)

@@ -194,6 +194,7 @@ class MemoryCheck:
         gen_max_arg,
         gen_steps,
         draw_chart=False,
+        find_big_o=False
     ):
         args = linear_space(
             min_val=gen_min_arg, max_val=gen_max_arg, steps_num=gen_steps
