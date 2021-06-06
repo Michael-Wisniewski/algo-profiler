@@ -7,7 +7,7 @@ def extend_analyse(args, vals, plt):
 
     print("Big O analysis results:\n")
     best_fit, _ = infer_big_o_class(args_array, vals_array, verbose=True)
-    best_fit = str(best_fit)
+    best_fit = str(best_fit).replace("^", "**")
     print(f"\nBest fitted function:\n\n{best_fit}\n")
 
     best_fit_name = best_fit[:best_fit.find(':')]
