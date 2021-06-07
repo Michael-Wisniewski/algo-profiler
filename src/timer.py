@@ -2,10 +2,11 @@ from timeit import timeit
 
 import matplotlib.pyplot as plt
 
+from .big_o_analyzer import extend_analyse
 from .helpers import LabelBase
 from .linear_space import linear_space
 from .printers import TablePrinterMixin
-from .big_o_analyzer import extend_analyse
+
 
 class TimerLabels(LabelBase):
     RUN_NUMBER = "Run number"
@@ -48,7 +49,7 @@ class TimerResultFormatter(TablePrinterMixin):
         plt.ylabel("Time [s]")
         func_label = f"{self.func_name} function"
         plt.plot(self.args, self.time, label=func_label)
-    
+
     def render_extended_chart(self):
         extend_analyse(args=self.args, vals=self.time, plt=plt)
 
@@ -72,13 +73,15 @@ class Timer:
         gen_steps,
         iterations=1,
         draw_chart=False,
-        find_big_o=False
+        find_big_o=False,
     ):
         print(f"{TimerLabels.RUN_ITERATIONS}: {iterations}\n\n")
         args = linear_space(
             min_val=gen_min_arg, max_val=gen_max_arg, steps_num=gen_steps
         )
-        result_formatter = TimerResultFormatter(runs_num=len(args), func_name=func.__name__)
+        result_formatter = TimerResultFormatter(
+            runs_num=len(args), func_name=func.__name__
+        )
 
         for index, arg in enumerate(args):
             data = data_gen(arg)
@@ -92,4 +95,3 @@ class Timer:
         elif draw_chart:
             result_formatter.render_base_chart()
             result_formatter.display_chart()
-
