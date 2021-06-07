@@ -1,5 +1,7 @@
-from big_o import infer_big_o_class
 import numpy as np
+
+from big_o import infer_big_o_class
+
 
 def extend_analyse(args, vals, plt):
     args_array = np.array(args)
@@ -10,7 +12,7 @@ def extend_analyse(args, vals, plt):
     best_fit = str(best_fit).replace("^", "**")
     print(f"\nBest fitted function:\n\n{best_fit}\n")
 
-    best_fit_name = best_fit[:best_fit.find(':')]
+    best_fit_name = best_fit[: best_fit.find(":")]
     predicted_func_label = f"{best_fit_name} function"
     func_start = best_fit.find("time = ") + 7
     func_end = best_fit.find(" (sec)", func_start)

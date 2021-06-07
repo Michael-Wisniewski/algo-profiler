@@ -2,17 +2,15 @@ import inspect
 from textwrap import dedent
 
 import matplotlib.pyplot as plt
+import numpy as np
 from objsize import get_deep_size as get_size
 
-from memory_profiler import LineProfiler, show_results, memory_usage
+from memory_profiler import LineProfiler, memory_usage, show_results
 
+from .big_o_analyzer import extend_analyse
 from .helpers import LabelBase
 from .linear_space import linear_space
 from .printers import TablePrinterMixin
-
-import numpy as np
-import matplotlib.pyplot as plt
-from .big_o_analyzer import extend_analyse
 
 
 class TimerLabels(LabelBase):
@@ -68,8 +66,8 @@ class MemoryCheckResultFormatter(TablePrinterMixin):
         func_mem_usage = [result["func_usage"] for result in self.results]
         total_mem_usage = [result["total_usage"] for result in self.results]
 
-        plt.plot(args, kwarg_sizes, label="kwargs size")  
-        plt.plot(args, func_mem_usage, label="function mem usage")        
+        plt.plot(args, kwarg_sizes, label="kwargs size")
+        plt.plot(args, func_mem_usage, label="function mem usage")
         plt.plot(args, total_mem_usage, label="total mem usage")
 
     def render_extended_chart(self):
@@ -171,10 +169,11 @@ class MemoryCheck:
 
     def run_time_based_memory_usge(self, func, kwargs, interval=0.1):
         import time
+
         plt.title("TIME BASED MEMORY USAGE")
         plt.xlabel("Time [s]")
         plt.ylabel("Memory usage [MB]")
-        
+
         start_time = time.time()
         mem_usage = memory_usage((func, (), kwargs), interval=interval)
         end_time = time.time()
@@ -198,7 +197,7 @@ class MemoryCheck:
         gen_max_arg,
         gen_steps,
         draw_chart=False,
-        find_big_o=False
+        find_big_o=False,
     ):
         args = linear_space(
             min_val=gen_min_arg, max_val=gen_max_arg, steps_num=gen_steps
