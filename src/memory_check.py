@@ -144,7 +144,11 @@ class MemoryCheck:
         self.helper_funcs = {}
         func_module = inspect.getmodule(func)
         funcs = inspect.getmembers(func_module, inspect.isfunction)
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e641497067b49f5d4bb4a8ba857dbb4993ad5705
         profiler = LineProfiler()
         wrapper = profiler(func)
 
@@ -153,6 +157,7 @@ class MemoryCheck:
                 continue
 
             profiler.code_map.add(func_instance.__code__)
+<<<<<<< HEAD
 
         wrapper(**kwargs)
 
@@ -224,3 +229,9 @@ class MemoryCheck:
         elif draw_chart:
             result_formatter.render_base_chart()
             result_formatter.display_chart()
+=======
+        
+        wrapper(**kwargs)
+        self.clean_result(profiler)
+        show_results(profiler)
+>>>>>>> e641497067b49f5d4bb4a8ba857dbb4993ad5705
