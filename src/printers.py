@@ -4,20 +4,19 @@ from reprlib import Repr
 from objsize import get_deep_size as get_size
 
 
-# use x1b and enum
 class PrinterMixin:
     def print_title(self, title):
-        print("\n", (f"\033[1m\033[47m\033[34m   {title}   \033[0m\n").center(100))
+        print("\n", (f"\x1b[1m\x1b[47m\x1b[34m   {title}   \x1b[0m\n").center(100))
 
     def print_function(self, func):
-        print(f"Function: \033[1m\033[34m{func.__name__}{signature(func)}\033[0m")
+        print(f"Function: \x1b[1m\x1b[34m{func.__name__}{signature(func)}\x1b[0m")
 
     def print_kwargs(self, kwargs, show_size=False):
         repr_instance = Repr()
         print()
 
         for arg_name, arg_val in kwargs.items():
-            print(f"\033[1m\033[34m{arg_name}\033[0m", end="")
+            print(f"\x1b[1m\x1b[34m{arg_name}\x1b[0m", end="")
 
             if isinstance(arg_val, (list, tuple, set, dict)):
                 print(f"({len(arg_val)})", end="")

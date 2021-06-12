@@ -6,7 +6,7 @@ from textwrap import dedent
 import sys
 import pickle
 
-def scalene_analyzer(func, kwargs, interval=float("inf")):
+def scalene_analyzer(func, kwargs, cpu_sampling_rate=0.1):
         input_path = os.path.abspath(inspect.getfile(func))
         output_path = os.path.join(
             os.path.dirname(__file__), "temp_files", "scalene_temp.py"
@@ -34,7 +34,7 @@ def scalene_analyzer(func, kwargs, interval=float("inf")):
 
         args =[
             "--cpu-percent-threshold", "1",
-            "--cpu-sampling-rate", "0.001",
+            "--cpu-sampling-rate", str(cpu_sampling_rate),
             "--malloc-threshold",  "10",
             "--profile-interval", "inf",
         ]

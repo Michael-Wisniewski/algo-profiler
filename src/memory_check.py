@@ -11,6 +11,7 @@ from .big_o_analyzer import extend_analyse
 from .helpers import LabelBase
 from .linear_space import linear_space
 from .printers import TablePrinterMixin
+import tracemalloc
 
 
 class TimerLabels(LabelBase):
@@ -112,13 +113,17 @@ class MemoryCheck:
         return usage_on_end - usage_on_start, usage_on_end
 
     def get_mem_usage(self, func, kwargs):
+        tracemalloc.clear_traces()
+        tracemalloc.start()
+        func(**kwargs)
+        _, peak_usage_B = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+
         kwargs_size = self.get_kwargs_size(kwargs)
+        peak_usage_MB = round(peak_usage_B / 1048576, 4)
+        total_usage = round(kwargs_size + peak_usage_MB, 4)
 
-        profiler = LineProfiler()
-        profiler(func)(**kwargs)
-        func_usage, total_usage = self.extract_result_from_profiler(profiler)
-
-        return kwargs_size, func_usage, total_usage
+        return kwargs_size, peak_usage_MB, total_usage
 
     def print_summary(self, kwargs_size, func_usage, total_usage):
         summary = dedent(
@@ -144,11 +149,6 @@ class MemoryCheck:
         self.helper_funcs = {}
         func_module = inspect.getmodule(func)
         funcs = inspect.getmembers(func_module, inspect.isfunction)
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> e641497067b49f5d4bb4a8ba857dbb4993ad5705
         profiler = LineProfiler()
         wrapper = profiler(func)
 
@@ -157,7 +157,6 @@ class MemoryCheck:
                 continue
 
             profiler.code_map.add(func_instance.__code__)
-<<<<<<< HEAD
 
         wrapper(**kwargs)
 
@@ -214,6 +213,7 @@ class MemoryCheck:
             kwargs_size, func_usage, total_usage = self.get_mem_usage(
                 func=func, kwargs=kwargs
             )
+
             result_formatter.append(
                 run_idnex=index + 1,
                 run_arg=arg,
@@ -229,9 +229,3 @@ class MemoryCheck:
         elif draw_chart:
             result_formatter.render_base_chart()
             result_formatter.display_chart()
-=======
-        
-        wrapper(**kwargs)
-        self.clean_result(profiler)
-        show_results(profiler)
->>>>>>> e641497067b49f5d4bb4a8ba857dbb4993ad5705

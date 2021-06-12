@@ -1,7 +1,7 @@
 import numpy as np
 
 from big_o import infer_big_o_class
-
+from math import log, log2
 
 def extend_analyse(args, vals, plt):
     args_array = np.array(args)
@@ -9,7 +9,7 @@ def extend_analyse(args, vals, plt):
 
     print("Big O analysis results:\n")
     best_fit, _ = infer_big_o_class(args_array, vals_array, verbose=True)
-    best_fit = str(best_fit).replace("^", "**")
+    best_fit = str(best_fit).replace("^", "**").replace("x", "n")
     print(f"\nBest fitted function:\n\n{best_fit}\n")
 
     best_fit_name = best_fit[: best_fit.find(":")]

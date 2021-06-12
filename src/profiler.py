@@ -55,11 +55,11 @@ class Profiler(PrinterMixin):
         coverage_checker = CoverageCheck(func=func, test_set=test_set)
         coverage_checker.test_coverage()
 
-    def run_time_check(self, func, kwargs):
+    def run_time_check(self, func, kwargs, iterations=1):
         self.print_title("TIME CHECK")
         self.print_function(func)
         self.print_kwargs(kwargs)
-        run_time = self.timer.get_run_time(func=func, kwargs=kwargs)
+        run_time = self.timer.get_run_time(func=func, kwargs=kwargs, iterations=1)
         print(f"Function run time: {round(run_time, 6)} sec")
 
     def run_time_analysis(
@@ -171,8 +171,8 @@ class Profiler(PrinterMixin):
 
         print()
 
-    def run_scalene(self, func, kwargs, interval=float("inf")):
+    def run_scalene(self, func, kwargs, cpu_sampling_rate=0.1):
         self.print_title("SCALENE")
         self.print_function(func)
         self.print_kwargs(kwargs, show_size=True)
-        scalene_analyzer(func=func, kwargs=kwargs, interval=interval)
+        scalene_analyzer(func=func, kwargs=kwargs, cpu_sampling_rate=cpu_sampling_rate)

@@ -45,7 +45,7 @@ class TimerResultFormatter(TablePrinterMixin):
 
     def render_base_chart(self):
         plt.title("Function run times")
-        plt.xlabel("Data generator's argument")
+        plt.xlabel("Data generator's argument [N]")
         plt.ylabel("Time [s]")
         func_label = f"{self.func_name} function"
         plt.plot(self.args, self.time, label=func_label)

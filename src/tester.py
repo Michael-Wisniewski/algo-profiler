@@ -11,6 +11,7 @@ class TestLabels(LabelBase):
     FAILED = "FAILED"
     CRASHED = "CRASHED"
     UNKNOWN = "UNKNOWN"
+    DATA_GENERATOR_ARGUMENT = "Datagen arg"
     ALL_PASSED = "ALL TESTS PASSED"
     SUMMARY = "FAILED TESTS SUMMARY"
 
@@ -54,14 +55,14 @@ class TestResultFormatter:
 
     def display_errors(self):
         header = TestLabels.SUMMARY if self.errors else TestLabels.ALL_PASSED
-        errors_log = "\n".join(self.errors)
-        print(f"\n{header}\n\n{errors_log}")
+        errors_log = "\n" + "\n".join(self.errors) if self.errors else ""
+        print(f"\n{header}\n{errors_log}")
 
 
 class StressTestResultFormatter(TestResultFormatter):
     def format_test_label(self, test_index):
         test_input = self.test_set[test_index]
-        return f"input: {test_input}"
+        return f"{TestLabels.DATA_GENERATOR_ARGUMENT}: {test_input}"
 
 
 class Tester(SchemaCheckMixin):
