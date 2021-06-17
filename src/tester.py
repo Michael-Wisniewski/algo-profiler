@@ -11,7 +11,7 @@ class TestLabels(LabelBase):
     FAILED = "FAILED"
     CRASHED = "CRASHED"
     UNKNOWN = "UNKNOWN"
-    DATA_GENERATOR_ARGUMENT = "Datagen arg"
+    DATA_GENERATOR_ARGUMENT = "Datagen argument"
     ALL_PASSED = "ALL TESTS PASSED"
     SUMMARY = "FAILED TESTS SUMMARY"
 

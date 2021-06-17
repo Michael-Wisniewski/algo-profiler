@@ -14,7 +14,7 @@ help:
 .PHONY: test
 test:
 	$(call print_h1,"STARTING","TESTS")
-	@python -B -m unittest discover -v -s tests -t ${PWD}
+	@python -B -m unittest discover -v -s tests -t ${PWD} -p 'test_tester.py'
 
 .PHONY: cov
 cov:

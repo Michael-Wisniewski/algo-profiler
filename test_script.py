@@ -1,141 +1,131 @@
-from test_function import search
-import random
-import string
+from test_function import increment_by_one
 from src import Profiler
 
-##### TEST DATA ############
 
 test_set = [
     {
-        "label": "List with wanted name.",
+        "label": "Empty list",
         "input": {
-            "names": [
-                "Paul",
-                "Dennis",
-                "Gregory",
-                "Nathan",
-                "Scott",
-                "Julian",
-                "Miles",
-                "Laura",
-            ],
-            "wanted_name": "Scott",
+            "numbers_list": [],
         },
-        "output": 4,
+        "output": [],
     },
     {
-        "label": "List without wanted name.",
+        "label": "List with positive numbers.",
         "input": {
-            "names": [
-                "Paul",
-                "Dennis",
-                "Gregory",
-                "Nathan",
-                "Scott",
-                "Julian",
-                "Miles",
-                "Laura",
-            ],
-            "wanted_name": "Steward",
+            "numbers_list": [1, 5, 7],
         },
-        "output": False,
+        "output": [2, 6, 8],
     },
     {
-        "label": "Test data with wrong anser.",
+        "label": "List with negative numbers.",
         "input": {
-            "names": [
-                "Paul",
-                "Dennis",
-                "Gregory",
-            ],
-            "wanted_name": "Steward",
+            "numbers_list": [-2, -7, -3],
         },
-        "output": 1,
+        "output": [-1, -6, -2],
+    },
+     {
+        "label": "List with large numbers.",
+        "input": {
+            "numbers_list": [100000000, 9999999999999999999],
+        },
+        "output": [100000001, 10000000000000000000],
     },
 ]
 
-##################################
+def data_gen(list_length):
+    """
+    >>> data_gen(3)
+    {'numbers_list': [0, 1, 2]}
 
-##### TEST DATA GENERATOR #########
+    >>> data_gen(7)
+    {'numbers_list': [0, 1, 2, 3, 4, 5, 6]}
+    """
 
+    numbers_list = [number for number in range(list_length)]
+    return {"numbers_list" : numbers_list}
 
-def data_gen_without_name(n):
-    names = []
-    letters = string.ascii_lowercase
-
-    for _ in range(n):
-        random_string = "".join(
-            random.choice(letters) for i in range(random.randrange(5, 10))
-        )
-        names.append(random_string)
-
-    return {"wanted_name": "Alan", "names": names}
-
-
-def data_gen_with_name(n, name="John"):
-    _, names = data_gen_without_name(n).values()
-    random_index = random.randrange(n)
-    names[random_index] = name
-    return {"wanted_name": name, "names": names}
-
-
-##################################
-
-##### NAIVE ALGORITHM ############
-
-
-def naive_search(wanted_name, names):
-    return names.index(wanted_name) if wanted_name in names else False
-
-
-##################################
+def naive_increment_by_one(numbers_list):
+    return [number + 1 for number in numbers_list]
 
 
 profiler = Profiler()
 
-profiler.run_tests(func=search, test_set=test_set)
+# profiler.run_tests(func=increment_by_one, test_set=test_set)
 
-profiler.run_stress_tests(
-    func=search,
-    naive_func=naive_search,
-    data_gen=data_gen_with_name,
-    gen_min_arg=1,
-    gen_max_arg=1000,
+# profiler.run_stress_tests(
+#     func=increment_by_one,
+#     naive_func=naive_increment_by_one,
+#     data_gen=data_gen,
+#     gen_min_arg=1,
+#     gen_max_arg=100,
+#     gen_steps=10,
+# )
+
+# profiler.run_coverage(func=increment_by_one, test_set=test_set)
+
+# profiler.run_time_check(
+#     func=increment_by_one,
+#     kwargs=data_gen(10000000),
+#     iterations=10
+# )
+
+# profiler.run_cProfile(
+#     func=increment_by_one,
+#     kwargs=data_gen(10000000)
+# )
+
+# profiler.run_snakeviz(
+#     func=increment_by_one,
+#     kwargs=data_gen(10000000)
+# )
+
+# profiler.run_line_profiler(
+#     func=increment_by_one,
+#     kwargs=data_gen(10000000)
+# )
+
+profiler.run_time_analysis(
+    func=increment_by_one,
+    data_gen=data_gen,
+    gen_min_arg=10,
+    gen_max_arg=10000000,
     gen_steps=10,
+    find_big_o=True
 )
 
-profiler.run_coverage(func=search, test_set=test_set)
+# profiler.run_memory_check(
+#     func=increment_by_one,
+#     kwargs=data_gen(10000000)
+# )
 
-profiler.run_time_check(
-    func=search,
-    kwargs=data_gen_with_name(100)
-)
+# profiler.run_memory_profiler(
+#     func=increment_by_one,
+#     kwargs=data_gen(1000000),
+#     clean_result=True
+# )
 
-profiler.run_timer(
-    func=search,
-    data_gen=data_gen_with_name,
-    gen_min_arg=1000,
-    gen_max_arg=10000,
-    gen_steps=10,
-    iterations=1,
-)
+# profiler.run_time_based_memory_usage(
+#     func=increment_by_one,
+#     kwargs=data_gen(10000000)
+# )
 
-profiler.run_c_profiler(
-    func=search,
-    kwargs=data_gen_with_name(10)
-)
+# profiler.check_memory_leaks(
+#     func=increment_by_one,
+#     kwargs=data_gen(100000)
+# )
 
-profiler.run_line_profiler(
-    func=search,
-    kwargs=data_gen_with_name(10)
-)
+# profiler.run_memory_analysis(
+#     func=increment_by_one,
+#     data_gen=data_gen,
+#     gen_min_arg=100,
+#     gen_max_arg=10000,
+#     gen_steps=10,
+#     find_big_o=True
+# )
 
-profiler.run_memory_check(
-    func=search,
-    kwargs=data_gen_with_name(10)
-)
-
-profiler.run_memory_profiler(
-    func=search,
-    kwargs=data_gen_with_name(10)
-)
+# profiler.run_scalene(
+#     func=increment_by_one,
+#     kwargs=data_gen(1000000),
+#     cpu_sampling_rate=0.001
+# )

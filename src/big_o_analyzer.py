@@ -1,14 +1,19 @@
+from math import log, log2  # noqa
+
 import numpy as np
 
 from big_o import infer_big_o_class
-from math import log, log2
+from .big_o_complexities import ALL_CLASSES
+
+# ADD complexiteties here and remove .replace("^", "**").replace("x", "n")
+
 
 def extend_analyse(args, vals, plt):
     args_array = np.array(args)
     vals_array = np.array(vals)
 
     print("Big O analysis results:\n")
-    best_fit, _ = infer_big_o_class(args_array, vals_array, verbose=True)
+    best_fit, _ = infer_big_o_class(args_array, vals_array, verbose=True, classes=ALL_CLASSES)
     best_fit = str(best_fit).replace("^", "**").replace("x", "n")
     print(f"\nBest fitted function:\n\n{best_fit}\n")
 

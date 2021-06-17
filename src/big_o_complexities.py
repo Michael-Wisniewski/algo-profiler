@@ -174,8 +174,19 @@ class Logarithmic(ComplexityClass):
         return "time = {:.2G} + {:.2G}*log(n)"
 
 
-class Linearithmic(ComplexityClass):
+class BinaryLinearithmic(ComplexityClass):
     order = 40
+
+    def _transform_n(self, n):
+        return np.vstack([np.ones(len(n)), n * np.log2(n)]).T
+
+    @classmethod
+    def format_str(cls):
+        return "time = {:.2G} + {:.2G}*n*log2(n)"
+
+
+class Linearithmic(ComplexityClass):
+    order = 45
 
     def _transform_n(self, n):
         return np.vstack([np.ones(len(n)), n * np.log(n)]).T
@@ -224,6 +235,7 @@ ALL_CLASSES = [
     Polynomial,
     BinaryLogarithmic,
     Logarithmic,
+    BinaryLinearithmic,
     Linearithmic,
     Exponential,
 ]

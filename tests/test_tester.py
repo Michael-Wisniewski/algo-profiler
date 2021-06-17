@@ -107,7 +107,6 @@ class ResultFormatterTest(TestCase):
         
         {TestLabels.ALL_PASSED}
 
-
         """
         )
 
@@ -179,11 +178,11 @@ class StressTestsFormatterTest(TestCase):
 
     @parameterized.expand(
         [
-            (0, "input: 1"),
-            (1, "input: 2"),
-            (2, "input: 3"),
-            (3, "input: 4"),
-            (4, "input: 5"),
+            (0, "Datagen argument: 1"),
+            (1, "Datagen argument: 2"),
+            (2, "Datagen argument: 3"),
+            (3, "Datagen argument: 4"),
+            (4, "Datagen argument: 5"),
         ]
     )
     def test_format_integer_test_label(self, test_idex, expected_label):
@@ -240,7 +239,7 @@ class TestTester(TestCase):
     )
     @mock.patch("sys.stdout", new_callable=io.StringIO)
     def test_stress_test_run_status(self, _, wanted_arg, test_status_label, mock_stdout):
-        expected_message = f"1/1 {test_status_label} input: {wanted_arg}"
+        expected_message = f"1/1 {test_status_label} Datagen argument: {wanted_arg}"
         self.tester.run_stress_tests(
             func=self.test_func,
             naive_func=self.test_naive_func,

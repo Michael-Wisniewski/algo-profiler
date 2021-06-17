@@ -1,15 +1,9 @@
+def increment_by_one(numbers_list):
+    incremented_list = []
 
-def search(wanted_name, names):
-    if len(names) == 0:
-        return False
+    for number in numbers_list:
+        incremented_number = number + 1
+        incremented_list.append(incremented_number)
 
-    name_index = False
-    
-    for index, name in enumerate(names):
-        if name == wanted_name:
-            name_index = index
-
-    a = [1] * (10 ** 6) # creating list for slowing down code
-    
-    return name_index
+    return incremented_list
 

@@ -1,4 +1,5 @@
 import inspect
+import tracemalloc
 from textwrap import dedent
 
 import matplotlib.pyplot as plt
@@ -11,7 +12,6 @@ from .big_o_analyzer import extend_analyse
 from .helpers import LabelBase
 from .linear_space import linear_space
 from .printers import TablePrinterMixin
-import tracemalloc
 
 
 class TimerLabels(LabelBase):
@@ -160,18 +160,19 @@ class MemoryCheck:
 
         wrapper(**kwargs)
 
+        kwargs_size = self.get_kwargs_size(kwargs)
+        func_usage, total_usage = self.extract_result_from_profiler(profiler)
+
         if clean_result:
             self.clean_result(profiler)
 
         show_results(profiler, precision=4)
 
-        kwargs_size = self.get_kwargs_size(kwargs)
-        func_usage, total_usage = self.extract_result_from_profiler(profiler)
         self.print_summary(
             kwargs_size=kwargs_size, func_usage=func_usage, total_usage=total_usage
         )
 
-    def run_time_based_memory_usge(self, func, kwargs, interval=0.1):
+    def run_time_based_memory_usage(self, func, kwargs, interval=0.1):
         import time
 
         plt.title("TIME BASED MEMORY USAGE")
@@ -186,11 +187,13 @@ class MemoryCheck:
         real_interval = total_time / len(mem_usage)
         time = np.linspace(0, len(mem_usage) * real_interval, len(mem_usage))
 
-        interval_description = f"Interval: given - {interval} sec, measured - {round(real_interval, 4)} sec"
+        interval_description = (
+            f"Interval: given - {interval} sec, "
+            f"measured - {round(real_interval, 4)} sec"
+        )
         plt.text(0, max(mem_usage), interval_description)
 
         plt.plot(time, mem_usage)
-        plt.legend()
         plt.show()
 
     def run_memory_analysis(

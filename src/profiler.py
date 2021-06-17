@@ -7,10 +7,10 @@ from pympler import tracker
 from .coverage_check import CoverageCheck
 from .memory_check import MemoryCheck
 from .printers import PrinterMixin
+from .scalene_analyzer import scalene_analyzer
 from .snakeviz_cli import run_snakeviz_server
 from .tester import Tester
 from .timer import Timer
-from .scalene_analyzer import scalene_analyzer
 
 
 class Profiler(PrinterMixin):
@@ -60,33 +60,15 @@ class Profiler(PrinterMixin):
         self.print_function(func)
         self.print_kwargs(kwargs)
         run_time = self.timer.get_run_time(func=func, kwargs=kwargs, iterations=1)
-        print(f"Function run time: {round(run_time, 6)} sec")
 
-    def run_time_analysis(
-        self,
-        func,
-        data_gen,
-        gen_min_arg,
-        gen_max_arg,
-        gen_steps,
-        iterations,
-        draw_chart=False,
-        find_big_o=False,
-    ):
-        self.print_title("TIMER")
-        self.print_function(func)
-        self.timer.run_time_analysis(
-            func=func,
-            data_gen=data_gen,
-            gen_min_arg=gen_min_arg,
-            gen_max_arg=gen_max_arg,
-            gen_steps=gen_steps,
-            iterations=iterations,
-            draw_chart=draw_chart,
-            find_big_o=find_big_o,
-        )
+        if iterations == 1:
+            print(f"Function run time: {round(run_time, 6)} sec")
+        else:
+            print(
+                f"Avg run time from {iterations} iterations: {round(run_time, 6)} sec"
+            )
 
-    def run_c_profiler(self, func, kwargs):
+    def run_cProfile(self, func, kwargs):
         self.print_title("C PROFILER")
         self.print_function(func)
         self.print_kwargs(kwargs)
@@ -97,6 +79,9 @@ class Profiler(PrinterMixin):
         self.print_function(func)
         self.print_kwargs(kwargs)
         run_snakeviz_server(func, kwargs)
+
+    # Add also graph plot for cProfier
+    # https://github.com/jrfonseca/gprof2dot
 
     def run_line_profiler(self, func, kwargs):
         self.print_title("LINE PROFILER")
@@ -114,6 +99,30 @@ class Profiler(PrinterMixin):
         line_profiler_wrapper(**kwargs)
         line_profiler.print_stats()
 
+    def run_time_analysis(
+        self,
+        func,
+        data_gen,
+        gen_min_arg,
+        gen_max_arg,
+        gen_steps,
+        iterations=1,
+        draw_chart=False,
+        find_big_o=False,
+    ):
+        self.print_title("TIME ANALYSIS")
+        self.print_function(func)
+        self.timer.run_time_analysis(
+            func=func,
+            data_gen=data_gen,
+            gen_min_arg=gen_min_arg,
+            gen_max_arg=gen_max_arg,
+            gen_steps=gen_steps,
+            iterations=iterations,
+            draw_chart=draw_chart,
+            find_big_o=find_big_o,
+        )
+
     def run_memory_check(self, func, kwargs):
         self.print_title("MEMORY CHECK")
         self.print_function(func)
@@ -128,34 +137,12 @@ class Profiler(PrinterMixin):
             func=func, kwargs=kwargs, clean_result=clean_result
         )
 
-    def run_time_based_memory_usge(self, func, kwargs, interval=0.1):
+    def run_time_based_memory_usage(self, func, kwargs, interval=0.1):
         self.print_title("TIME BASED MEMORY USAGE")
         self.print_function(func)
         self.print_kwargs(kwargs, show_size=True)
-        self.memory_check.run_time_based_memory_usge(
+        self.memory_check.run_time_based_memory_usage(
             func=func, kwargs=kwargs, interval=interval
-        )
-
-    def run_memory_analysis(
-        self,
-        func,
-        data_gen,
-        gen_min_arg,
-        gen_max_arg,
-        gen_steps,
-        draw_chart=False,
-        find_big_o=False,
-    ):
-        self.print_title("MEMORY CHECKS")
-        self.print_function(func)
-        self.memory_check.run_memory_analysis(
-            func=func,
-            data_gen=data_gen,
-            gen_min_arg=gen_min_arg,
-            gen_max_arg=gen_max_arg,
-            gen_steps=gen_steps,
-            draw_chart=draw_chart,
-            find_big_o=find_big_o,
         )
 
     def check_memory_leaks(self, func, kwargs, num_of_checks=3):
@@ -170,6 +157,28 @@ class Profiler(PrinterMixin):
             tr.print_diff()
 
         print()
+
+    def run_memory_analysis(
+        self,
+        func,
+        data_gen,
+        gen_min_arg,
+        gen_max_arg,
+        gen_steps,
+        draw_chart=False,
+        find_big_o=False,
+    ):
+        self.print_title("MEMORY ANALYSIS")
+        self.print_function(func)
+        self.memory_check.run_memory_analysis(
+            func=func,
+            data_gen=data_gen,
+            gen_min_arg=gen_min_arg,
+            gen_max_arg=gen_max_arg,
+            gen_steps=gen_steps,
+            draw_chart=draw_chart,
+            find_big_o=find_big_o,
+        )
 
     def run_scalene(self, func, kwargs, cpu_sampling_rate=0.1):
         self.print_title("SCALENE")
