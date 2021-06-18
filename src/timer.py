@@ -61,7 +61,7 @@ class TimerResultFormatter(TablePrinterMixin):
 class Timer:
     def get_run_time(self, func, kwargs, iterations=1):
         total_execution_time = timeit(lambda: func(**kwargs), number=iterations)
-        avg_execution_time = total_execution_time / iterations
+        avg_execution_time = round(total_execution_time / iterations, 6)
         return avg_execution_time
 
     def run_time_analysis(

@@ -51,7 +51,7 @@ class CoverageCheck(SchemaCheckMixin, TablePrinterMixin):
 
     def run_coverage(self):
         self.coverage.start()
-        # Because function module was imported before we reload it to get full coverage
+        # Because function module was imported before, we reload it to get the full coverage.
         importlib.reload(inspect.getmodule(self.func))
 
         for test_data in self.test_set:

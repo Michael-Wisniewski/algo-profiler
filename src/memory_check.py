@@ -4,9 +4,8 @@ from textwrap import dedent
 
 import matplotlib.pyplot as plt
 import numpy as np
-from objsize import get_deep_size as get_size
-
 from memory_profiler import LineProfiler, memory_usage, show_results
+from objsize import get_deep_size as get_size
 
 from .big_o_analyzer import extend_analyse
 from .helpers import LabelBase

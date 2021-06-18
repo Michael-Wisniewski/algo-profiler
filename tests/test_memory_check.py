@@ -17,13 +17,19 @@ class TestMemoryCheck(TestCase):
         return create_list
 
     def test_get_memory_usage(self):
-        result_1 = self.memory_check.get_mem_usage(self.test_func, kwargs={"n": 1})
+        kwargs_size_1, peak_usage_1, total_usage_1 = self.memory_check.get_mem_usage(self.test_func, kwargs={"n": 1})
 
-        self.assertTrue(isinstance(result_1, float))
-        self.assertTrue(result_1 > 0)
+        self.assertTrue(isinstance(kwargs_size_1, float))
+        self.assertTrue(isinstance(peak_usage_1, float))
+        self.assertTrue(isinstance(total_usage_1, float))
 
-        result_2 = self.memory_check.get_mem_usage(self.test_func, kwargs={"n": 3})
-        self.assertTrue(result_2 > result_1)
+        self.assertTrue(kwargs_size_1 > 0)
+        self.assertTrue(peak_usage_1 > 0)
+        self.assertTrue(total_usage_1 > 0)
 
-        result_3 = self.memory_check.get_mem_usage(self.test_func, kwargs={"n": 5})
-        self.assertTrue(result_3 > result_2)
+        kwargs_size_2, peak_usage_2, total_usage_2 = self.memory_check.get_mem_usage(self.test_func, kwargs={"n": 3})
+        self.assertTrue(total_usage_2 > total_usage_1)
+
+        self.assertTrue(kwargs_size_2 == kwargs_size_1)
+        self.assertTrue(peak_usage_2 > peak_usage_1)
+        self.assertTrue(total_usage_2 > total_usage_1)

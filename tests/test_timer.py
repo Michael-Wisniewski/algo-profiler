@@ -1,4 +1,5 @@
 import io
+from src.big_o_analyzer import BigOLabels
 from src.timer import TimerResultFormatter, TimerLabels, Timer
 from unittest import TestCase, mock
 from textwrap import dedent
@@ -26,7 +27,7 @@ class TestTimerResultFormatter(TestCase):
         )
 
         expected_result = expected_headers_row
-        result_formatter = TimerResultFormatter(runs_num=2)
+        result_formatter = TimerResultFormatter(runs_num=2, func_name="sleep")
         self.assertEqual(mock_stdout.getvalue(), expected_result)
 
         expected_result += expected_first_row
@@ -70,14 +71,63 @@ class TestTimer(TestCase):
 
     @mock.patch.object(TimerResultFormatter, "append")
     def test_run_time_analysis(self, mock_append):
-        self.timer.run_time_analysis(func=self.sleep, data_gen=self.test_data_gen, gen_min_arg=1, gen_max_arg=2, gen_steps=2)
+        self.timer.run_time_analysis(
+            func=self.sleep,
+            data_gen=self.test_data_gen,
+            gen_min_arg=1,
+            gen_max_arg=2,
+            gen_steps=2
+        )
         self.assertTrue(len(mock_append.call_args_list) == 2)
 
         run_idnex_1, run_arg_1, run_time_1 = mock_append.call_args_list[0][1].values()
         run_idnex_2, run_arg_2, run_time_2 = mock_append.call_args_list[1][1].values()
+
+        self.assertTrue(isinstance(run_idnex_1, int))
+        self.assertTrue(isinstance(run_arg_1, int))
+        self.assertTrue(isinstance(run_time_1, float))
 
         self.assertEqual(run_idnex_1, 1)
         self.assertEqual(run_idnex_2, 2)
         self.assertEqual(run_idnex_1, 1)
         self.assertEqual(run_idnex_2, 2)
         self.assertTrue(run_time_2 > run_time_1)
+
+    @mock.patch("src.timer.plt")
+    def test_run_time_analysis_with_chart(self, mock_plt):
+        self.timer.run_time_analysis(
+            func=self.sleep,
+            data_gen=self.test_data_gen,
+            gen_min_arg=1,
+            gen_max_arg=2,
+            gen_steps=2,
+            draw_chart=True
+        )
+
+        mock_plt.title.assert_called_once_with("Function run times")
+        mock_plt.xlabel.assert_called_once_with("Data generator's argument [N]")
+        mock_plt.ylabel.assert_called_once_with("Time [s]")
+        self.assertEqual(mock_plt.plot.call_count, 1)
+        self.assertEqual(mock_plt.legend.call_count, 1)
+        self.assertEqual(mock_plt.show.call_count, 1)
+
+    @mock.patch("src.timer.plt")
+    @mock.patch("sys.stdout", new_callable=io.StringIO)
+    def test_run_time_analysis_with_big_o(self, mock_stdout, mock_plt):
+        self.timer.run_time_analysis(
+            func=self.sleep,
+            data_gen=self.test_data_gen,
+            gen_min_arg=1,
+            gen_max_arg=3,
+            gen_steps=3,
+            find_big_o=True
+        )
+
+        mock_plt.title.assert_called_once_with("Function run times")
+        mock_plt.xlabel.assert_called_once_with("Data generator's argument [N]")
+        mock_plt.ylabel.assert_called_once_with("Time [s]")
+        self.assertEqual(mock_plt.plot.call_count, 2)
+        self.assertEqual(mock_plt.legend.call_count, 1)
+        self.assertEqual(mock_plt.show.call_count, 1)
+
+        self.assertTrue(str(BigOLabels.RESULT) in mock_stdout.getvalue())

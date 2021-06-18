@@ -14,16 +14,16 @@ from .timer import Timer
 
 
 class Profiler(PrinterMixin):
-    def __init__(self, timer_iterations=10):
+    def __init__(self):
         super().__init__()
-        self.tester = Tester()
         self.timer = Timer()
         self.memory_check = MemoryCheck()
 
     def run_tests(self, func, test_set):
         self.print_title("UNIT TESTS")
         self.print_function(func)
-        self.tester.run_unit_tests(func=func, test_set=test_set)
+        tester = Tester()
+        tester.run_unit_tests(func=func, test_set=test_set)
 
     def run_stress_tests(
         self,
@@ -40,7 +40,8 @@ class Profiler(PrinterMixin):
             self.print_title(label)
         self.print_function(func)
         self.print_function(naive_func)
-        self.tester.run_stress_tests(
+        tester = Tester()
+        tester.run_stress_tests(
             func=func,
             naive_func=naive_func,
             data_gen=data_gen,
@@ -62,11 +63,9 @@ class Profiler(PrinterMixin):
         run_time = self.timer.get_run_time(func=func, kwargs=kwargs, iterations=1)
 
         if iterations == 1:
-            print(f"Function run time: {round(run_time, 6)} sec")
+            print(f"Function run time: {run_time} sec")
         else:
-            print(
-                f"Avg run time from {iterations} iterations: {round(run_time, 6)} sec"
-            )
+            print(f"Avg run time from {iterations} iterations: {run_time} sec")
 
     def run_cProfile(self, func, kwargs):
         self.print_title("C PROFILER")
