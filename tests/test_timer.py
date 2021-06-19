@@ -130,4 +130,4 @@ class TestTimer(TestCase):
         self.assertEqual(mock_plt.legend.call_count, 1)
         self.assertEqual(mock_plt.show.call_count, 1)
 
-        self.assertTrue(str(BigOLabels.RESULT) in mock_stdout.getvalue())
+        self.assertIn(str(BigOLabels.RESULT), mock_stdout.getvalue())

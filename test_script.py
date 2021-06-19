@@ -75,15 +75,15 @@ profiler = Profiler()
 #     kwargs=data_gen(10000000)
 # )
 
-profiler.run_snakeviz(
-    func=increment_by_one,
-    kwargs=data_gen(10000000)
-)
-
-# profiler.run_line_profiler(
+# profiler.run_snakeviz(
 #     func=increment_by_one,
 #     kwargs=data_gen(10000000)
 # )
+
+profiler.run_line_profiler(
+    func=increment_by_one,
+    kwargs=data_gen(10000000)
+)
 
 # profiler.run_time_analysis(
 #     func=increment_by_one,

@@ -1,7 +1,5 @@
 import cProfile
-import inspect
 
-from line_profiler import LineProfiler
 from pympler import tracker
 
 from .coverage_check import CoverageCheck
@@ -11,7 +9,7 @@ from .scalene_analyzer import scalene_analyzer
 from .snakeviz_cli import run_snakeviz_server
 from .tester import Tester
 from .timer import Timer
-
+from .profiling_by_line import run_profiling_by_line
 
 class Profiler(PrinterMixin):
     def __init__(self):
@@ -79,24 +77,11 @@ class Profiler(PrinterMixin):
         self.print_kwargs(kwargs)
         run_snakeviz_server(func, kwargs)
 
-    # Add also graph plot for cProfier
-    # https://github.com/jrfonseca/gprof2dot
-
     def run_line_profiler(self, func, kwargs):
         self.print_title("LINE PROFILER")
         self.print_function(func)
         self.print_kwargs(kwargs)
-        line_profiler = LineProfiler()
-        functions = inspect.getmembers(inspect.getmodule(func), inspect.isfunction)
-        function_instances = dict(functions).values()
-
-        for function_instance in function_instances:
-            if function_instance is not func:
-                line_profiler.add_function(function_instance)
-
-        line_profiler_wrapper = line_profiler(func)
-        line_profiler_wrapper(**kwargs)
-        line_profiler.print_stats()
+        run_profiling_by_line(func, kwargs)
 
     def run_time_analysis(
         self,
