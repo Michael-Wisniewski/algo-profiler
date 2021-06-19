@@ -75,24 +75,24 @@ profiler = Profiler()
 #     kwargs=data_gen(10000000)
 # )
 
-# profiler.run_snakeviz(
-#     func=increment_by_one,
-#     kwargs=data_gen(10000000)
-# )
+profiler.run_snakeviz(
+    func=increment_by_one,
+    kwargs=data_gen(10000000)
+)
 
 # profiler.run_line_profiler(
 #     func=increment_by_one,
 #     kwargs=data_gen(10000000)
 # )
 
-profiler.run_time_analysis(
-    func=increment_by_one,
-    data_gen=data_gen,
-    gen_min_arg=10,
-    gen_max_arg=10000000,
-    gen_steps=10,
-    find_big_o=True
-)
+# profiler.run_time_analysis(
+#     func=increment_by_one,
+#     data_gen=data_gen,
+#     gen_min_arg=10,
+#     gen_max_arg=10000000,
+#     gen_steps=10,
+#     find_big_o=True
+# )
 
 # profiler.run_memory_check(
 #     func=increment_by_one,
