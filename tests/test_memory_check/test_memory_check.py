@@ -39,7 +39,7 @@ class TestMemoryCheck(TestCase):
 
     @mock.patch("sys.stdout", new_callable=io.StringIO)
     def test_run_memory_profiler_for_all_functions(self, mock_stdout):
-        self.memory_check.run_memory_profiler(func=get_floor, kwargs={"number": 1.0})
+        self.memory_check.run_memory_profiler(func=get_floor, kwargs={"number": 1.0}, clean_result=True)
         result = mock_stdout.getvalue()
         self.assertIn("get_floor", result)
         self.assertIn("apply_floor", result)
@@ -47,10 +47,9 @@ class TestMemoryCheck(TestCase):
     @mock.patch("sys.stdout", new_callable=io.StringIO)
     def test_run_memory_profiler_with_clean_output(self, mock_stdout):
         self.memory_check.run_memory_profiler(func=create_list, kwargs={"n": 1}, clean_result=True)
-        result = mock_stdout.getvalue() 
+        result = mock_stdout.getvalue()
         self.assertIn("3   0.0000 MiB   0.0000 MiB", result)
         
-    def test_run_memory_profiler_with_clean_output(self):
-        self.memory_check.run_time_based_memory_usage(func=create_list, kwargs={"n": 1})
-      
+
+
         

@@ -177,10 +177,6 @@ class MemoryCheck:
     def run_time_based_memory_usage(self, func, kwargs, interval=0.1):
         import time
 
-        plt.title("TIME BASED MEMORY USAGE")
-        plt.xlabel("Time [s]")
-        plt.ylabel("Memory usage [MB]")
-
         start_time = time.time()
         mem_usage = memory_usage((func, (), kwargs), interval=interval)
         end_time = time.time()
@@ -188,12 +184,13 @@ class MemoryCheck:
         total_time = end_time - start_time
         real_interval = total_time / len(mem_usage)
         time = np.linspace(0, len(mem_usage) * real_interval, len(mem_usage))
+        title = dedent(f"""\
+        TIME BASED MEMORY USAGE
+        Interval: given - {interval} sec, measured - {round(real_interval, 4)} sec""")
 
-        interval_description = (
-            f"Interval: given - {interval} sec, "
-            f"measured - {round(real_interval, 4)} sec"
-        )
-        plt.text(0, max(mem_usage), interval_description)
+        plt.title(title)
+        plt.xlabel("Time [s]")
+        plt.ylabel("Memory usage [MB]")
 
         plt.plot(time, mem_usage)
         plt.show()
