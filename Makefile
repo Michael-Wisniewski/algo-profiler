@@ -14,7 +14,8 @@ help:
 .PHONY: test
 test:
 	$(call print_h1,"STARTING","TESTS")
-	@python -B -m unittest discover -v -s tests -t ${PWD} -p 'test_line_profiler.py'
+	@python -B -m unittest discover -v -s tests -t ${PWD} -p "test_memory_check*"
+	# @python -B -m unittest discover -v -s tests/skip_coverage -t ${PWD}
 
 .PHONY: cov
 cov:

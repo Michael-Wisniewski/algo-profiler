@@ -90,6 +90,9 @@ class MemoryCheck:
         initial_usage = list(usage_by_lines.values())[0][1]
 
         for code_obj_key, code_lines in dict(code_map).items():
+            if len(code_map[code_obj_key]) == 0:
+                continue
+
             first_line_usage_key = list(code_map[code_obj_key].keys())[0]
             _, usage, occurences = code_map[code_obj_key][first_line_usage_key]
             code_map[code_obj_key][first_line_usage_key] = (0.0, usage, occurences)

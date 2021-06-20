@@ -1,5 +1,5 @@
 from unittest import TestCase, mock
-from .helper_functions import get_floor2
+from .functions import get_floor
 from src.profiling_by_line import run_profiling_by_line
 import io
 
