@@ -1,5 +1,8 @@
 from math import floor
 
+def test_data_gen(n):
+        return {"n": n}
+
 def create_list(n):
     return [1] * 10 ** 5 * n
 

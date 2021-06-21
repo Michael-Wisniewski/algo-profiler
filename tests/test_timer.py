@@ -89,8 +89,8 @@ class TestTimer(TestCase):
 
         self.assertEqual(run_idnex_1, 1)
         self.assertEqual(run_idnex_2, 2)
-        self.assertEqual(run_idnex_1, 1)
-        self.assertEqual(run_idnex_2, 2)
+        self.assertEqual(run_arg_1, 1)
+        self.assertEqual(run_arg_2, 2)
         self.assertTrue(run_time_2 > run_time_1)
 
     @mock.patch("src.timer.plt")
