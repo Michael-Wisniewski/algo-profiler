@@ -51,6 +51,23 @@ class TestMemoryCheck(TestCase):
         result = mock_stdout.getvalue()
         self.assertIn("6   0.0000 MiB   0.0000 MiB", result)
 
+    @mock.patch("src.memory_check.plt")
+    def test_run_time_based_memory_usage(self, mock_plt):
+        self.memory_check.run_time_based_memory_usage(func=create_list, kwargs={"n": 5})
+
+        title = mock_plt.title.call_args[0][0]
+        self.assertIn("TIME BASED MEMORY USAGE", title)
+        mock_plt.xlabel.assert_called_once_with("Time [s]")
+        mock_plt.ylabel.assert_called_once_with("Memory usage [MB]")
+
+        self.assertEqual(mock_plt.plot.call_count, 1)
+        time, mem_usage = mock_plt.plot.call_args[0]
+        self.assertTrue(len(time) > 0)
+        self.assertTrue(len(mem_usage) > 0)
+
+        self.assertEqual(mock_plt.plot.call_count, 1)
+        self.assertEqual(mock_plt.show.call_count, 1)
+
     @mock.patch.object(MemoryCheckResultFormatter, "append")
     def test_run_memory_analysis(self, mock_append):
         self.memory_check.run_memory_analysis(
