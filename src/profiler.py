@@ -164,7 +164,7 @@ class Profiler(PrinterMixin):
             find_big_o=find_big_o,
         )
 
-    def run_scalene(self, func, kwargs, cpu_sampling_rate=0.1):
+    def run_scalene(self, func, kwargs={}, cpu_sampling_rate=0.1):
         self.print_title("SCALENE")
         self.print_function(func)
         self.print_kwargs(kwargs, show_size=True)

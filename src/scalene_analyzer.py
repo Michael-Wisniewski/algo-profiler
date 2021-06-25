@@ -7,7 +7,7 @@ from textwrap import dedent
 from scalene.scalene_profiler import Scalene
 
 
-def scalene_analyzer(func, kwargs, cpu_sampling_rate=0.1):
+def scalene_analyzer(func, kwargs={}, cpu_sampling_rate=0.1):
     input_path = os.path.abspath(inspect.getfile(func))
     output_path = os.path.join(
         os.path.dirname(__file__), "temp_files", "scalene_temp.py"
@@ -52,8 +52,8 @@ def scalene_analyzer(func, kwargs, cpu_sampling_rate=0.1):
     try:
         Scalene.main()
     except SystemExit as system_exit:
-        if system_exit.code != 0:
-            print("Analyzed function crashed.")
+        if system_exit.code ==0:
+            pass
     finally:
         os.remove(output_path)
         os.remove(kwargs_path)
