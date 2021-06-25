@@ -45,11 +45,15 @@ def scalene_analyzer(func, kwargs, cpu_sampling_rate=0.1):
         "--profile-interval",
         "inf",
     ]
-    sys.argv += args
+
+    sys.argv = args
     sys.argv.append(output_path)
 
     try:
         Scalene.main()
+    except SystemExit as system_exit:
+        if system_exit.code != 0:
+            print("Analyzed function crashed.")
     finally:
         os.remove(output_path)
         os.remove(kwargs_path)

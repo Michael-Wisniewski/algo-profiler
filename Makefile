@@ -14,7 +14,7 @@ help:
 .PHONY: test
 test:
 	$(call print_h1,"STARTING","TESTS")
-	@python -B -m unittest discover -v -s tests/test_memory_check -t ${PWD}
+	@python -B -m unittest discover -v -s tests -t ${PWD} -p "test_scalene.py"
 	# @python -B -m unittest discover -v -s tests/skip_coverage -t ${PWD}
 
 .PHONY: cov
