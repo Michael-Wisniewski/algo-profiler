@@ -1,5 +1,6 @@
 big_o
 coverage
+coverage-badge
 line_profiler
 matplotlib
 memory_profiler
