@@ -110,7 +110,7 @@ profiler.run_line_profiler(
 #     kwargs=data_gen(10000000)
 # )
 
-# profiler.check_memory_leaks(
+# profiler.run_check_memory_leaks(
 #     func=increment_by_one,
 #     kwargs=data_gen(100000)
 # )

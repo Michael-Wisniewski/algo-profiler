@@ -5,11 +5,12 @@ from pympler import tracker
 from .coverage_check import CoverageCheck
 from .memory_check import MemoryCheck
 from .printers import PrinterMixin
+from .profiling_by_line import run_profiling_by_line
 from .scalene_analyzer import scalene_analyzer
 from .snakeviz_cli import run_snakeviz_server
 from .tester import Tester
 from .timer import Timer
-from .profiling_by_line import run_profiling_by_line
+
 
 class Profiler(PrinterMixin):
     def __init__(self):
@@ -129,7 +130,7 @@ class Profiler(PrinterMixin):
             func=func, kwargs=kwargs, interval=interval
         )
 
-    def check_memory_leaks(self, func, kwargs, num_of_checks=3):
+    def run_check_memory_leaks(self, func, kwargs, num_of_checks=3):
         self.print_title("MEMORY LEAK CHECK")
         self.print_function(func)
         self.print_kwargs(kwargs, show_size=True)
@@ -164,7 +165,7 @@ class Profiler(PrinterMixin):
             find_big_o=find_big_o,
         )
 
-    def run_scalene(self, func, kwargs={}, cpu_sampling_rate=0.1):
+    def run_scalene(self, func, kwargs, cpu_sampling_rate=0.1):
         self.print_title("SCALENE")
         self.print_function(func)
         self.print_kwargs(kwargs, show_size=True)

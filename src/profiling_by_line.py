@@ -1,5 +1,7 @@
-from line_profiler import LineProfiler
 import inspect
+
+from line_profiler import LineProfiler
+
 
 def run_profiling_by_line(func, kwargs):
     line_profiler = LineProfiler()
@@ -13,4 +15,3 @@ def run_profiling_by_line(func, kwargs):
     line_profiler_wrapper = line_profiler(func)
     line_profiler_wrapper(**kwargs)
     line_profiler.print_stats()
-

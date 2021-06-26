@@ -184,9 +184,11 @@ class MemoryCheck:
         total_time = end_time - start_time
         real_interval = total_time / len(mem_usage)
         time = np.linspace(0, len(mem_usage) * real_interval, len(mem_usage))
-        title = dedent(f"""\
+        title = dedent(
+            f"""\
         TIME BASED MEMORY USAGE
-        Interval: given - {interval} sec, measured - {round(real_interval, 4)} sec""")
+        Interval: given - {interval} sec, measured - {round(real_interval, 4)} sec"""
+        )
 
         plt.title(title)
         plt.xlabel("Time [s]")

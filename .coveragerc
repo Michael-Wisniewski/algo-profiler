@@ -1,6 +1,6 @@
 [run]
 source = ./src
-omit = *__init__.py, *profiling_by_line.py
+omit = *__init__.py, *profiling_by_line.py, *profiler.py
 timid = 1
 
 [html]

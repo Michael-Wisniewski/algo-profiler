@@ -2,15 +2,18 @@ from math import log, log2  # noqa
 
 import numpy as np
 from big_o import infer_big_o_class
-from .helpers import LabelBase
 
 from .big_o_complexities import ALL_CLASSES
+from .helpers import LabelBase
+
 
 class BigOLabels(LabelBase):
     RESULT = "Big O analysis results."
- 
+
+
 # ADD complexiteties here and remove .replace("^", "**").replace("x", "n")
 # min 3 argumenty
+
 
 def extend_analyse(args, vals, plt):
     args_array = np.array(args)
