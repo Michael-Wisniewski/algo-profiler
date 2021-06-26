@@ -44,6 +44,21 @@ class TestPrinterMixin(TestCase):
         self.printer.print_kwargs(kwargs)
         self.assertEqual(mock_stdout.getvalue(), expected_kwargs)
 
+    @mock.patch("sys.stdout", new_callable=io.StringIO)
+    def test_print_kwargs_with_size(self, mock_stdout):
+        expected_kwargs = (
+            "\n\x1b[1m\x1b[34mtest_list\x1b[0m(4) 0.0002 MB: [1, 2, 3, 4]\n"
+            "\x1b[1m\x1b[34mtest_dict\x1b[0m(1) 0.0003 MB: {'key': 'value'}\n"
+            "\x1b[1m\x1b[34mtest_var\x1b[0m 0.0 MB: 1\n\n"
+        )
+        kwargs = {
+            "test_list": [1, 2, 3, 4],
+            "test_dict": {"key": "value"},
+            "test_var": 1,
+        }
+        self.printer.print_kwargs(kwargs, show_size=True)
+        self.assertEqual(mock_stdout.getvalue(), expected_kwargs)
+
 
 class TestTablePrinterMixin(TestCase):
     @mock.patch("sys.stdout", new_callable=io.StringIO)
