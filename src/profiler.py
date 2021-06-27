@@ -13,7 +13,9 @@ from .timer import Timer
 
 
 class Profiler(PrinterMixin):
-    """This class combines all profiling packages and allows to run them  by calling the specific methods."""
+    """This class combines all profiling packages and allows to run them,
+    by calling the specific methods.
+    """
 
     def __init__(self):
         super().__init__()
@@ -28,7 +30,7 @@ class Profiler(PrinterMixin):
             test_set (nested list): List of test cases.
 
         Returns:
-            None: Displays information about the performed tests. 
+            None: Displays information about the performed tests.
         """
         self.print_title("UNIT TESTS")
         self.print_function(func)
@@ -82,7 +84,7 @@ class Profiler(PrinterMixin):
             test_set (nested list): List of test cases.
 
         Returns:
-            None: Displays information about function test coverage. 
+            None: Displays information about function test coverage.
         """
         self.print_title("COVERAGE TEST")
         self.print_function(func)
@@ -98,7 +100,7 @@ class Profiler(PrinterMixin):
             iterations (int): Number of function runs. Average runtime is calculated.
 
         Returns:
-            None: Displays information about function runtime. 
+            None: Displays information about function runtime.
         """
         self.print_title("TIME CHECK")
         self.print_function(func)
@@ -118,7 +120,7 @@ class Profiler(PrinterMixin):
             kwargs (nested dict): Arguments to run the function.
 
         Returns:
-            None: Displays information from cProfile. 
+            None: Displays information from cProfile.
         """
         self.print_title("C PROFILER")
         self.print_function(func)
@@ -133,7 +135,7 @@ class Profiler(PrinterMixin):
             kwargs (nested dict): Arguments to run the function.
 
         Returns:
-            None: Runs Snakeviz server and opens a new web browser tab. 
+            None: Runs Snakeviz server and opens a new web browser tab.
         """
         self.print_title("SNAKEVIZ")
         self.print_function(func)
@@ -148,7 +150,7 @@ class Profiler(PrinterMixin):
             kwargs (nested dict): Arguments to run the function.
 
         Returns:
-            None: Displays information from line profiler. 
+            None: Displays information from line profiler.
         """
         self.print_title("LINE PROFILER")
         self.print_function(func)
@@ -172,10 +174,11 @@ class Profiler(PrinterMixin):
             func (function): Function to run.
             data_gen (function): Function generating test arguments.
             gen_min_arg (int): Minimal argument for a generator function.
-            gen_max_arg (int): Maximum argument for a generator function .
+            gen_max_arg (int): Maximum argument for a generator function.
             gen_steps (int): Number of steps to perform.
             iterations (int): Number of runs for each step. Average time is calculated.
-            draw_chart (bool): Determines whether the results will be presented in a chart.
+            draw_chart (bool): Determines whether the results will be presented
+                               in a chart.
             find_big_o (bool): Determines whether BigO will be predicted.
 
         Returns:
@@ -202,7 +205,7 @@ class Profiler(PrinterMixin):
             kwargs (nested dict): Arguments to run the function.
 
         Returns:
-            None: Displays information about function memory usage. 
+            None: Displays information about function memory usage.
         """
         self.print_title("MEMORY CHECK")
         self.print_function(func)
@@ -215,10 +218,11 @@ class Profiler(PrinterMixin):
         Args:
             func (function): Function to run.
             kwargs (nested dict): Arguments to run the function.
-            clean_result (bool): Determines whether the function memory usage will be extracted from total memory consumption.
+            clean_result (bool): Determines whether the function memory usage will be
+                                 extracted from total memory consumption.
 
         Returns:
-            None: Displays information from memory profiler. 
+            None: Displays information from memory profiler.
         """
         self.print_title("MEMORY PROFILER")
         self.print_function(func)
@@ -236,7 +240,7 @@ class Profiler(PrinterMixin):
             interval (float): Frequency of measurements.
 
         Returns:
-            None: Displays information about function time based memory usage. 
+            None: Displays information about function time based memory usage.
         """
         self.print_title("TIME BASED MEMORY USAGE")
         self.print_function(func)
@@ -254,7 +258,7 @@ class Profiler(PrinterMixin):
             num_of_checks (int): Number of checks after the end of the function.
 
         Returns:
-            None: Displays information about objects left in memory. 
+            None: Displays information about objects left in memory.
         """
         self.print_title("MEMORY LEAK CHECK")
         self.print_function(func)
@@ -286,7 +290,8 @@ class Profiler(PrinterMixin):
             gen_min_arg (int): Minimal argument for a generator function.
             gen_max_arg (int): Maximum argument for a generator function .
             gen_steps (int): Number of steps to perform.
-            draw_chart (bool): Determines whether the results will be presented in a chart.
+            draw_chart (bool): Determines whether the results will be presented
+                               in a chart.
             find_big_o (bool): Determines whether BigO will be predicted.
 
         Returns:
@@ -313,7 +318,7 @@ class Profiler(PrinterMixin):
             cpu_sampling_rate (float): Frequency of measurements.
 
         Returns:
-            None: Displays information from Scalene. 
+            None: Displays information from Scalene.
         """
         self.print_title("SCALENE")
         self.print_function(func)
