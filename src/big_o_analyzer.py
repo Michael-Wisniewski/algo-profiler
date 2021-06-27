@@ -11,7 +11,9 @@ class BigOLabels(LabelBase):
     RESULT = "Big O analysis results."
     BEST_FIT = "Best fitted function"
     NOT_ENOUGH_POINTS = "There must be at least three points to make an analysis."
-    TOO_BIG_ARGS = "Warning - The n was too big and was scaled down to range <0, 100000>."
+    TOO_BIG_ARGS = (
+        "Warning - The n was too big and was scaled down to range <0, 100000>."
+    )
     TOO_SMALL_VALS = "Warning - The measured values were too small and were normalized."
 
 
@@ -21,11 +23,11 @@ def extend_analyse(args, vals, plt=None):
 
     # Scale down n to range <0, 10000> if necessary.
     args_array = np.array(args)
-    args_scale_factor = 1 
+    args_scale_factor = 1
 
     if np.max(args_array) > 100000:
         args_scale_factor = 100000 / np.max(args_array)
-        print(BigOLabels.TOO_BIG_ARGS, end='\n\n')
+        print(BigOLabels.TOO_BIG_ARGS, end="\n\n")
 
     args_array = args_array * args_scale_factor
 
@@ -37,7 +39,7 @@ def extend_analyse(args, vals, plt=None):
     if np.max(vals_array) < 0.001:
         vals_mean = np.mean(vals)
         vals_std = np.std(vals)
-        print(BigOLabels.TOO_SMALL_VALS, end='\n\n')
+        print(BigOLabels.TOO_SMALL_VALS, end="\n\n")
 
     vals_array = (vals_array - vals_mean) / vals_std
 

@@ -1,7 +1,7 @@
 import io
-
 from unittest import TestCase, mock
-from src.big_o_analyzer import extend_analyse, BigOLabels
+
+from src.big_o_analyzer import BigOLabels, extend_analyse
 
 
 class TestBigOAnalyzer(TestCase):
@@ -21,7 +21,7 @@ class TestBigOAnalyzer(TestCase):
         extend_analyse(args=args, vals=vals)
 
         self.assertIn("Best fitted function:\n\nCubic", mock_stdout.getvalue())
-        
+
     @mock.patch("sys.stdout", new_callable=io.StringIO)
     def test_run_with_small_vals(self, mock_stdout):
         args = [100, 200, 300, 400, 500, 600, 700]
