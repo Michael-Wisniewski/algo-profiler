@@ -12,3 +12,6 @@ parameterized
 pympler
 scalene
 snakeviz
+sphinx
+sphinx_rtd_theme
+sphinxcontrib-napoleon

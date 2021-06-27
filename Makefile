@@ -32,5 +32,10 @@ lint:
 	$(call print_h1,"LAUNCHING","FLAKE8")
 	@flake8 --max-line-length 90 ./src/
 
+.PHONY: sphinx
+sphinx:
+	$(call print_h1,"UPDATING","DOCUMENTATION")
+	@(cd ./docs/source && make html)
+
 # dodac tox
 # dodac  python setup.py bdist_wheel
