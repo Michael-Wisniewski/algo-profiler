@@ -16,9 +16,6 @@ class BigOLabels(LabelBase):
 
 
 def extend_analyse(args, vals, plt=None):
-
-    print('args', args)
-    print('vals', vals)
     if len(args) < 3:
         raise ValueError(BigOLabels.NOT_ENOUGH_POINTS)
 
@@ -59,7 +56,7 @@ def extend_analyse(args, vals, plt=None):
 
     if plt is not None:
         predicted_vals = []
-        
+
         for n in args:
             n = n * args_scale_factor
             denormalized_prediction = eval(function) * vals_std + vals_mean
