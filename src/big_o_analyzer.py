@@ -16,9 +16,13 @@ class BigOLabels(LabelBase):
 
 
 def extend_analyse(args, vals, plt=None):
+
+    print('args', args)
+    print('vals', vals)
     if len(args) < 3:
         raise ValueError(BigOLabels.NOT_ENOUGH_POINTS)
 
+    # Scale down n to range <0, 10000> if necessary.
     args_array = np.array(args)
     args_scale_factor = 1 
 
@@ -28,6 +32,7 @@ def extend_analyse(args, vals, plt=None):
 
     args_array = args_array * args_scale_factor
 
+    # Normalize vals is necessary.
     vals_array = np.array(vals)
     vals_mean = 0
     vals_std = 1
@@ -52,11 +57,12 @@ def extend_analyse(args, vals, plt=None):
     func_end = best_fit.find(" (sec)", func_start)
     function = best_fit[func_start:func_end]
 
-    predicted_vals = []
-    for n in args:
-        n = n * args_scale_factor
-        denormalized_prediction = eval(function) * vals_std + vals_mean
-        predicted_vals.append(denormalized_prediction)
-
     if plt is not None:
+        predicted_vals = []
+        
+        for n in args:
+            n = n * args_scale_factor
+            denormalized_prediction = eval(function) * vals_std + vals_mean
+            predicted_vals.append(denormalized_prediction)
+
         plt.plot(args, predicted_vals, label=predicted_func_label)
