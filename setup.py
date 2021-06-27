@@ -8,14 +8,25 @@ setup(
     py_modules=["Profiler"],
     package_dir={"": "src"},
     install_requires=[
-       "line-profiler==3.0.2",
-        "memory-profiler==0.54.0"
+        "big_o",
+        "coverage",
+        "line_profiler",
+        "matplotlib",
+        "memory_profiler",
+        "objsize",
+        "pympler",
+        "scalene",
+        "snakeviz",
     ],
     extra_require = {
         "dev": [
-            "black==21.4b2",
-            "parameterized==0.8.1",
-            "coverage==5.5"
+            "black",
+            "flake8",
+            "isort",
+            "parameterized",
+            "sphinx",
+            "sphinx_rtd_theme",
+            "sphinxcontrib-napoleon",
         ]
     }
 )
