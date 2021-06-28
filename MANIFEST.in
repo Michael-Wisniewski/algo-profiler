@@ -1,0 +1,14 @@
+include *.py
+include *.txt
+include *.yml
+include .coveragerc
+include Makefile
+include tox.ini
+recursive-include algo_profiler *.gitkeep
+recursive-include docs *.bat
+recursive-include docs *.py
+recursive-include docs *.rst
+recursive-include docs Makefile
+recursive-include examples *.py
+recursive-include make *.mk
+recursive-include tests *.py

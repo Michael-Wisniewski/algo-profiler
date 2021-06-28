@@ -30,6 +30,7 @@ setup(
     extras_require = {
         "dev": [
             "black",
+            "check-manifest",
             "flake8",
             "isort",
             "parameterized",
