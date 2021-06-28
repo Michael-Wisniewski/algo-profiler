@@ -35,5 +35,3 @@ Lunch a sample script from `examples` folder.
 python test_increment_by_one.py
 ```
 Extended desciption with examples can be found [here](href:https://aroundpython.com/2021/06/13/tool-for-writing-algorithms/)
-
-Documentation of the main module is available [here]()
