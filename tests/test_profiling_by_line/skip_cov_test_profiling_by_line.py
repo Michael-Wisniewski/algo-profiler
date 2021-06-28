@@ -1,6 +1,6 @@
 from unittest import TestCase, mock
 from .functions import get_floor
-from src.profiling_by_line import run_profiling_by_line
+from algo_profiler.profiling_by_line import run_profiling_by_line
 import io
 
 

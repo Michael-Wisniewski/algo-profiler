@@ -35,7 +35,7 @@ lint:
 .PHONY: sphinx
 sphinx:
 	$(call print_h1,"UPDATING","DOCUMENTATION")
-	@(cd ./docs/source && make html)
+	@(cd ./docs && make html)
 
 # dodac tox
 # dodac  python setup.py bdist_wheel

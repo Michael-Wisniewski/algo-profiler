@@ -3,7 +3,7 @@ import re
 import io
 from unittest import TestCase, mock
 
-from src.coverage_check import CoverageLabels, CoverageCheck
+from algo_profiler.coverage_check import CoverageLabels, CoverageCheck
 
 from .functions import get_floor
 from textwrap import dedent
@@ -27,7 +27,7 @@ class TestCoverageCheck(TestCase):
             self.assertEqual(len(mock_remove.call_args_list), 1)
             temp_file_path = mock_remove.call_args.args[0]
             self.assertTrue(
-                re.match("^.*/src/temp_files/tests_test_coverage_functions.py,cover$", temp_file_path)
+                re.match("^.*/algo_profiler/temp_files/tests_test_coverage_functions.py,cover$", temp_file_path)
             )
 
         os.remove(temp_file_path)

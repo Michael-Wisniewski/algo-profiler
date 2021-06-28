@@ -1,5 +1,5 @@
-from test_function import increment_by_one
-from src import Profiler
+from increment_by_one import increment_by_one
+from algo_profiler import Profiler
 
 
 test_set = [
@@ -99,11 +99,11 @@ profiler = Profiler()
 #     kwargs=data_gen(10000000)
 # )
 
-# profiler.run_memory_profiler(
-#     func=increment_by_one,
-#     kwargs=data_gen(1000000),
-#     clean_result=True
-# )
+profiler.run_memory_profiler(
+    func=increment_by_one,
+    kwargs=data_gen(10000),
+    clean_result=True
+)
 
 # profiler.run_time_based_memory_usage(
 #     func=increment_by_one,
@@ -115,14 +115,14 @@ profiler = Profiler()
 #     kwargs=data_gen(100000)
 # )
 
-profiler.run_memory_analysis(
-    func=increment_by_one,
-    data_gen=data_gen,
-    gen_min_arg=100,
-    gen_max_arg=1000,
-    gen_steps=10,
-    find_big_o=True
-)
+# profiler.run_memory_analysis(
+#     func=increment_by_one,
+#     data_gen=data_gen,
+#     gen_min_arg=100,
+#     gen_max_arg=1000,
+#     gen_steps=10,
+#     find_big_o=True
+# )
 
 # profiler.run_scalene(
 #     func=increment_by_one,

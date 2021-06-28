@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from src.helpers import LabelBase
+from algo_profiler.helpers import LabelBase
 
 
 class LabelBaseTest(TestCase):

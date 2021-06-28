@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from parameterized import parameterized
 
-from src.schema_check import DataErrorLabels, SchemaCheckMixin
+from algo_profiler.schema_check import DataErrorLabels, SchemaCheckMixin
 
 
 class TestSchemaCheck(TestCase):
