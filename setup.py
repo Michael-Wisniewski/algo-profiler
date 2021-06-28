@@ -19,7 +19,7 @@ setup(
     install_requires=[
         "big_o",
         "coverage",
-        "memory-profiler",
+        "line_profiler",
         "matplotlib",
         "memory_profiler",
         "objsize",
