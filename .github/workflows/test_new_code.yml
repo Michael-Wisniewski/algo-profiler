@@ -25,10 +25,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements_dev.txt
     - name: Lint with isort
-      run : isort ./src
+      run : isort ./algo_profiler
     - name: Lint with black
-      run: black ./src
+      run: black ./algo_profiler
     - name: Lint with flake8
-      run: flake8 --max-line-length 90 ./src
+      run: flake8 --max-line-length 90 ./algo_profiler
     - name: Tests
       run: python -m unittest discover -v -s tests -t ${PWD}
