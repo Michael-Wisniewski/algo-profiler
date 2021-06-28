@@ -3,7 +3,7 @@ from unittest import TestCase, mock
 
 from parameterized import parameterized
 
-from src.linear_space import linear_space
+from algo_profiler.linear_space import linear_space
 
 
 class TestLinearSpace(TestCase):

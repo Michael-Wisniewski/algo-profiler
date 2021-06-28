@@ -7,7 +7,7 @@ from unittest import TestCase, mock
 
 from parameterized import parameterized
 
-from src.tester import (StressTestResultFormatter, Tester,
+from algo_profiler.tester import (StressTestResultFormatter, Tester,
                         TestLabels, TestResultFormatter)
 
 

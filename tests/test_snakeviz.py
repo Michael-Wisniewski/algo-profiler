@@ -3,7 +3,7 @@ import re
 import sys
 from unittest import TestCase, mock
 
-from src.snakeviz_cli import run_snakeviz_server
+from algo_profiler.snakeviz_cli import run_snakeviz_server
 
 
 class TestSnakeviz(TestCase):
@@ -11,7 +11,7 @@ class TestSnakeviz(TestCase):
     def create_list(self):
         return lambda n: [0] * n
 
-    @mock.patch("src.snakeviz_cli.snakeviz")
+    @mock.patch("algo_profiler.snakeviz_cli.snakeviz")
     @mock.patch.object(sys, "argv")
     def test_removing_the_right_file(self, sys_args, mock_snakeviz):
         temp_file_path = ""
@@ -26,7 +26,7 @@ class TestSnakeviz(TestCase):
 
             sys_args.append.assert_called_once_with(temp_file_path)
             self.assertTrue(
-                re.match("^.*/src/temp_files/snakeviz.prof$", temp_file_path)
+                re.match("^.*/algo_profiler/temp_files/snakeviz.prof$", temp_file_path)
             )
 
         os.remove(temp_file_path)

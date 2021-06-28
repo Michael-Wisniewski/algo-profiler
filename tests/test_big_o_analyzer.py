@@ -1,7 +1,7 @@
 import io
 from unittest import TestCase, mock
 
-from src.big_o_analyzer import BigOLabels, extend_analyse
+from algo_profiler.big_o_analyzer import BigOLabels, extend_analyse
 
 
 class TestBigOAnalyzer(TestCase):

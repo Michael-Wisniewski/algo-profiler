@@ -1,5 +1,5 @@
 [run]
-source = ./src
+source = ./algo_profiler
 omit = *__init__.py, *profiling_by_line.py, *profiler.py
 timid = 1
 

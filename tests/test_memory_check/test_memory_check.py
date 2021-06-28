@@ -3,8 +3,8 @@ import io
 from sys import getsizeof
 from unittest import TestCase, mock
 
-from src.memory_check import MemoryCheck, MemoryCheckResultFormatter
-from src.big_o_analyzer import BigOLabels
+from algo_profiler.memory_check import MemoryCheck, MemoryCheckResultFormatter
+from algo_profiler.big_o_analyzer import BigOLabels
 from .functions import create_list, get_floor, test_data_gen
 
 class TestMemoryCheck(TestCase):
@@ -51,7 +51,7 @@ class TestMemoryCheck(TestCase):
         result = mock_stdout.getvalue()
         self.assertIn("6   0.0000 MiB   0.0000 MiB", result)
 
-    @mock.patch("src.memory_check.plt")
+    @mock.patch("algo_profiler.memory_check.plt")
     def test_run_time_based_memory_usage(self, mock_plt):
         self.memory_check.run_time_based_memory_usage(func=create_list, kwargs={"n": 5})
 
@@ -96,7 +96,7 @@ class TestMemoryCheck(TestCase):
         self.assertTrue(func_2 > func_1)
         self.assertTrue(total_2 > total_1)
 
-    @mock.patch("src.memory_check.plt")
+    @mock.patch("algo_profiler.memory_check.plt")
     def test_run_memory_analysis_with_chart(self, mock_plt):
         self.memory_check.run_memory_analysis(
             func=create_list,
@@ -114,7 +114,7 @@ class TestMemoryCheck(TestCase):
         self.assertEqual(mock_plt.legend.call_count, 1)
         self.assertEqual(mock_plt.show.call_count, 1)
 
-    @mock.patch("src.memory_check.plt")
+    @mock.patch("algo_profiler.memory_check.plt")
     @mock.patch("sys.stdout", new_callable=io.StringIO)
     def test_run_memory_analysis_with_big_o(self, mock_stdout, mock_plt):
         self.memory_check.run_memory_analysis(

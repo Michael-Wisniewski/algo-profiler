@@ -26,16 +26,16 @@ cov:
 .PHONY: lint
 lint:
 	$(call print_h1,"LAUNCHING","ISORT")
-	@isort ./src
+	@isort ./algo_profiler
 	$(call print_h1,"LAUNCHING","BLACK")
-	@black ./src
+	@black ./algo_profiler
 	$(call print_h1,"LAUNCHING","FLAKE8")
-	@flake8 --max-line-length 90 ./src/
+	@flake8 --max-line-length 90 ./algo_profiler/
 
 .PHONY: sphinx
 sphinx:
 	$(call print_h1,"UPDATING","DOCUMENTATION")
-	@(cd ./docs/source && make html)
+	@(cd ./docs && make html)
 
 # dodac tox
 # dodac  python setup.py bdist_wheel

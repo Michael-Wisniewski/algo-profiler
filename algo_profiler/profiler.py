@@ -2,14 +2,14 @@ import cProfile
 
 from pympler import tracker
 
-from .coverage_check import CoverageCheck
-from .memory_check import MemoryCheck
-from .printers import PrinterMixin
-from .profiling_by_line import run_profiling_by_line
-from .scalene_analyzer import scalene_analyzer
-from .snakeviz_cli import run_snakeviz_server
-from .tester import Tester
-from .timer import Timer
+from algo_profiler.coverage_check import CoverageCheck
+from algo_profiler.memory_check import MemoryCheck
+from algo_profiler.printers import PrinterMixin
+from algo_profiler.profiling_by_line import run_profiling_by_line
+from algo_profiler.scalene_analyzer import scalene_analyzer
+from algo_profiler.snakeviz_cli import run_snakeviz_server
+from algo_profiler.tester import Tester
+from algo_profiler.timer import Timer
 
 
 class Profiler(PrinterMixin):

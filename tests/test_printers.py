@@ -2,7 +2,7 @@ import io
 from textwrap import dedent
 from unittest import TestCase, mock
 
-from src.printers import PrinterMixin, TablePrinterMixin
+from algo_profiler.printers import PrinterMixin, TablePrinterMixin
 
 
 class TestPrinterMixin(TestCase):

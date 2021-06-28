@@ -1,5 +1,5 @@
 from unittest import TestCase, mock
-from src.profiler import Profiler
+from algo_profiler.profiler import Profiler
 from .functions import increment_by_one
 
 class TestProfiler(TestCase):
@@ -92,7 +92,7 @@ class TestProfiler(TestCase):
         kwargs = self.data_gen(100)
         self.profiler.run_cProfile(func=increment_by_one, kwargs=kwargs)
 
-    @mock.patch("src.profiler.run_snakeviz_server")
+    @mock.patch("algo_profiler.profiler.run_snakeviz_server")
     def test_run_snakeviz(self, mock_snakeviz_server):
         kwargs = self.data_gen(100)
         self.profiler.run_snakeviz(func=increment_by_one, kwargs=kwargs)
@@ -119,7 +119,7 @@ class TestProfiler(TestCase):
         kwargs = self.data_gen(100)
         self.profiler.run_memory_profiler(func=increment_by_one, kwargs=kwargs, clean_result=True)
 
-    @mock.patch("src.memory_check.plt")
+    @mock.patch("algo_profiler.memory_check.plt")
     def test_run_time_based_memory_usage(self, mock_plt):
         kwargs = self.data_gen(100)
         self.profiler.run_time_based_memory_usage(func=increment_by_one, kwargs=kwargs, interval=0.01)

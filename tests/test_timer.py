@@ -1,6 +1,6 @@
 import io
-from src.big_o_analyzer import BigOLabels
-from src.timer import TimerResultFormatter, TimerLabels, Timer
+from algo_profiler.big_o_analyzer import BigOLabels
+from algo_profiler.timer import TimerResultFormatter, TimerLabels, Timer
 from unittest import TestCase, mock
 from textwrap import dedent
 import time
@@ -93,7 +93,7 @@ class TestTimer(TestCase):
         self.assertEqual(run_arg_2, 2)
         self.assertTrue(run_time_2 > run_time_1)
 
-    @mock.patch("src.timer.plt")
+    @mock.patch("algo_profiler.timer.plt")
     def test_run_time_analysis_with_chart(self, mock_plt):
         self.timer.run_time_analysis(
             func=self.sleep,
@@ -111,7 +111,7 @@ class TestTimer(TestCase):
         self.assertEqual(mock_plt.legend.call_count, 1)
         self.assertEqual(mock_plt.show.call_count, 1)
 
-    @mock.patch("src.timer.plt")
+    @mock.patch("algo_profiler.timer.plt")
     @mock.patch("sys.stdout", new_callable=io.StringIO)
     def test_run_time_analysis_with_big_o(self, mock_stdout, mock_plt):
         self.timer.run_time_analysis(
