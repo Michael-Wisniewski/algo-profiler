@@ -37,6 +37,7 @@ setup(
             "sphinx",
             "sphinx_rtd_theme",
             "sphinxcontrib-napoleon",
+            "tox",
             "twine",
         ]
     }
