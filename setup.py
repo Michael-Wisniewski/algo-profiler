@@ -5,14 +5,14 @@ with open("README.md", "r") as f:
 
 setup(
     name="algo-profiler",
-    version="0.0.1",
+    version="0.0.2",
     description="A module for profiling algorithms.",
     author="Michał Wiśniewski",
     long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[
         "Programming Language :: Python :: 3.8",
-        "License :: MIT",
+        "License :: OSI Approved :: MIT License",
     ],
     url="https://github.com/Michael-Wisniewski/algo-profiler",
     packages=["algo_profiler"],
@@ -37,6 +37,7 @@ setup(
             "sphinx",
             "sphinx_rtd_theme",
             "sphinxcontrib-napoleon",
+            "twine",
         ]
     }
 )

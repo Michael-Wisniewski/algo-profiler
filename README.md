@@ -1,4 +1,4 @@
-![lint](./.github/lint.svg)
+![lint](https://raw.githubusercontent.com/gist/Michael-Wisniewski/3f54787a495dfd8a05072c1eb12f9da3/raw/lint.svg)
 ![lines of code](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/gist/Michael-Wisniewski/3f54787a495dfd8a05072c1eb12f9da3/raw/lines_of_code.json)
 ![coverage](https://raw.githubusercontent.com/gist/Michael-Wisniewski/3f54787a495dfd8a05072c1eb12f9da3/raw/coverage.svg)
 

@@ -1,5 +1,4 @@
 include *.in
-include *.yml
 include .coveragerc
 include Makefile
 include tox.ini
@@ -8,3 +7,9 @@ recursive-include algo_profiler *.gitkeep
 recursive-include examples *.py
 recursive-include make *.mk
 recursive-include tests *.py
+
+exclude notes.txt
+recursive-exclude docs *.bat
+recursive-exclude docs *.py
+recursive-exclude docs *.rst
+recursive-exclude docs Makefile
