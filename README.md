@@ -34,4 +34,4 @@ Lunch a sample script from `examples` folder.
 ```shell
 python test_increment_by_one.py 
 ```
-Extended desciption with examples can be found [here](href:https://aroundpython.com/2021/06/13/tool-for-writing-algorithms/)
+Extended desciption with examples can be found [here](https://aroundpython.com/2021/06/13/tool-for-writing-algorithms/)
