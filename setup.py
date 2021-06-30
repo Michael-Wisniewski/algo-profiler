@@ -26,7 +26,7 @@ Package of profiling tools which allows to run function:
 
 setup(
     name="algo-profiler",
-    version="0.0.23",
+    version="0.0.24",
     description="A module for profiling algorithms.",
     author="Michał Wiśniewski",
     long_description=long_description,
